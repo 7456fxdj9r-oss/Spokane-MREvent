@@ -478,7 +478,12 @@
             status2.textContent = 'Please answer all questions (' + missing.length + ' left).';
             // scroll to first missing question
             const firstMissing = step2Form.querySelector('input[name=' + missing[0][0] + ']');
-            if (firstMissing) firstMissing.closest('.yn-block, .scale')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (firstMissing) {
+                const target = firstMissing.closest('.yn-block, .scale');
+                if (target && target.scrollIntoView) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
             return;
         }
 
