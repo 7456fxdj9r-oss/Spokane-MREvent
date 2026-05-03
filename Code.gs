@@ -1,18 +1,20 @@
 /**
  * Metabolic Momentum — Raffle backend (Google Apps Script)
  *
+ * Single-form version: doPost takes the entire raffle entry in one body
+ * and writes one row.
+ *
  * Setup / redeploy after editing:
  *   1. Replace Code.gs in Apps Script with this file. Save.
- *   2. Once (only when HEADERS change): from the function dropdown choose
+ *   2. (Only when HEADERS change) From the function dropdown choose
  *      `resetHeaders` and click Run. ⚠️ Wipes all entries.
  *   3. Deploy → Manage deployments → ✏️ pencil → Version: New version
  *      → Deploy. The Web app URL stays the same.
  *
  * Endpoints:
- *   POST <url>  body { ...entry... }            → create entry, returns { ok, id }
- *   POST <url>  body { action:'update', id, ... } → fill in step-2 fields
- *   POST <url>  body { action:'clear' }          → delete all entries
- *   GET  <url>?action=list                       → { ok, entries:[{id, name}, ...] }
+ *   POST <url>  body { ...entry... }       → append a new entry
+ *   POST <url>  body { action:'clear' }    → delete all entries
+ *   GET  <url>?action=list                 → { ok, entries:[{id, name}, ...] }
  */
 
 const SHEET_ID   = '1ArpZ_eXSXy0IEMlYPI1m0r_LP-J-TIiYV93X38HOqCQ';
@@ -39,22 +41,6 @@ const HEADERS = [
   'Anything Else'
 ];
 
-// Map step-2 field names → header column names. Order doesn't matter; lookup is by header name.
-const UPDATE_FIELDS = {
-  hasDiabetes:        'Knows: Diabetes',
-  hasHighBP:          'Knows: High Blood Pressure',
-  hasHighCholesterol: 'Knows: High Cholesterol',
-  rateEnergy:         'Rate: Energy',
-  rateSleep:          'Rate: Sleep',
-  rateWeight:         'Rate: Weight',
-  rateCravings:       'Rate: Cravings/Blood Sugar',
-  rateMood:           'Rate: Mood/Stress',
-  rateDigestion:      'Rate: Digestion',
-  rateCommunity:      'Rate: Community/Connection',
-  triedBefore:        'Tried Program Before',
-  frustration:        'Anything Else'
-};
-
 function doPost(e) {
   const lock = LockService.getDocumentLock();
   lock.waitLock(5000);
@@ -68,60 +54,41 @@ function doPost(e) {
       return jsonResponse_({ ok: true, cleared: true });
     }
 
-    if (data.action === 'update') {
-      return updateEntry_(data);
+    if (!data.name || !data.email) {
+      return jsonResponse_({ ok: false, error: 'name and email are required' });
     }
 
-    return createEntry_(data);
+    const sheet = getSheet_();
+    const row = HEADERS.map(h => {
+      switch (h) {
+        case 'Timestamp':                  return new Date();
+        case 'Name':                       return data.name || '';
+        case 'Email':                      return data.email || '';
+        case 'Phone':                      return data.phone || '';
+        case 'Invited By':                 return data.invitedBy || '';
+        case 'Newsletter Opt-In':          return data.newsletter ? 'Yes' : 'No';
+        case 'Knows: Diabetes':            return data.hasDiabetes || '';
+        case 'Knows: High Blood Pressure': return data.hasHighBP || '';
+        case 'Knows: High Cholesterol':    return data.hasHighCholesterol || '';
+        case 'Rate: Energy':               return data.rateEnergy || '';
+        case 'Rate: Sleep':                return data.rateSleep || '';
+        case 'Rate: Weight':               return data.rateWeight || '';
+        case 'Rate: Cravings/Blood Sugar': return data.rateCravings || '';
+        case 'Rate: Mood/Stress':          return data.rateMood || '';
+        case 'Rate: Digestion':            return data.rateDigestion || '';
+        case 'Rate: Community/Connection': return data.rateCommunity || '';
+        case 'Tried Program Before':       return data.triedBefore || '';
+        case 'Anything Else':              return data.frustration || '';
+        default:                           return '';
+      }
+    });
+    sheet.appendRow(row);
+    return jsonResponse_({ ok: true });
   } catch (err) {
     return jsonResponse_({ ok: false, error: String(err) });
   } finally {
     lock.releaseLock();
   }
-}
-
-function createEntry_(data) {
-  if (!data.name || !data.email) {
-    return jsonResponse_({ ok: false, error: 'name and email are required' });
-  }
-  const sheet = getSheet_();
-  // Build a row in HEADERS order, leaving step-2 columns blank.
-  const row = HEADERS.map(h => {
-    switch (h) {
-      case 'Timestamp':         return new Date();
-      case 'Name':              return data.name || '';
-      case 'Email':             return data.email || '';
-      case 'Phone':             return data.phone || '';
-      case 'Invited By':        return data.invitedBy || '';
-      case 'Newsletter Opt-In': return data.newsletter ? 'Yes' : 'No';
-      default:                  return '';
-    }
-  });
-  sheet.appendRow(row);
-  const id = sheet.getLastRow();
-  return jsonResponse_({ ok: true, id: id });
-}
-
-function updateEntry_(data) {
-  const id = parseInt(data.id, 10);
-  if (!id || id < 2) {
-    return jsonResponse_({ ok: false, error: 'invalid id' });
-  }
-  const sheet = getSheet_();
-  if (id > sheet.getLastRow()) {
-    return jsonResponse_({ ok: false, error: 'id out of range' });
-  }
-  const headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  for (const [field, header] of Object.entries(UPDATE_FIELDS)) {
-    if (!(field in data)) continue;
-    const colIdx = headerRow.indexOf(header);
-    if (colIdx < 0) continue;
-    let val = data[field];
-    // Booleans → Yes/blank. Numbers/strings → as-is.
-    if (typeof val === 'boolean') val = val ? 'Yes' : '';
-    sheet.getRange(id, colIdx + 1).setValue(val);
-  }
-  return jsonResponse_({ ok: true, updated: id });
 }
 
 function doGet(e) {
