@@ -5,17 +5,15 @@
  *   1. Open the Google Sheet:
  *      https://docs.google.com/spreadsheets/d/1ArpZ_eXSXy0IEMlYPI1m0r_LP-J-TIiYV93X38HOqCQ/edit
  *   2. Extensions → Apps Script.
- *   3. Replace the default Code.gs contents with this file.
- *   4. Save.
- *   5. Deploy → New deployment → type "Web app".
- *      - Description: Metabolic Momentum raffle
- *      - Execute as: Me
- *      - Who has access: Anyone
- *      Click Deploy. Copy the resulting Web app URL.
- *   6. Send that URL to your developer (or paste it into raffle.html and
- *      wheel.html replacing the __SCRIPT_URL__ placeholder).
+ *   3. Replace the default Code.gs contents with this file. Save.
+ *   4. (Once, after pasting an updated version) From the function dropdown
+ *      at the top, choose `resetHeaders` and click Run. This wipes the
+ *      "Entries" tab and writes fresh column headers.
+ *      ⚠️  Only do this if you want to start with an empty sheet.
+ *   5. Deploy → Manage deployments → pencil ✏️ next to the active deployment
+ *      → Version: New version → Deploy. The Web app URL stays the same.
  *
- * Endpoints (after deployment):
+ * Endpoints:
  *   POST  <url>                 → append a raffle entry (body = JSON)
  *   GET   <url>?action=list     → returns { ok: true, entries: [{id, name}, ...] }
  */
@@ -29,11 +27,15 @@ const HEADERS = [
   'Email',
   'Phone',
   'Invited By',
-  'What Brought You',
-  'Energy (1-5)',
-  'Sleep (1-5)',
+  'Rate: Energy',
+  'Rate: Sleep',
+  'Rate: Weight',
+  'Rate: Cravings/Blood Sugar',
+  'Rate: Mood/Stress',
+  'Rate: Digestion',
+  'Rate: Community/Connection',
   'Tried Program Before',
-  'Biggest Frustration',
+  'Anything Else',
   'Newsletter Opt-In'
 ];
 
@@ -52,9 +54,13 @@ function doPost(e) {
       data.email || '',
       data.phone || '',
       data.invitedBy || '',
-      data.whatBrought || '',
-      data.energy || '',
-      data.sleep || '',
+      data.rateEnergy || '',
+      data.rateSleep || '',
+      data.rateWeight || '',
+      data.rateCravings || '',
+      data.rateMood || '',
+      data.rateDigestion || '',
+      data.rateCommunity || '',
       data.triedBefore || '',
       data.frustration || '',
       data.newsletter ? 'Yes' : 'No'
@@ -85,6 +91,25 @@ function doGet(e) {
   }
 
   return jsonResponse_({ ok: true, message: 'Metabolic Momentum raffle endpoint. POST to submit, GET ?action=list to read.' });
+}
+
+/**
+ * Wipe the Entries tab and rewrite headers.
+ * Run this manually from the Apps Script editor when you change the
+ * HEADERS array above. ⚠️ Destroys all existing entries.
+ */
+function resetHeaders() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  let sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_NAME);
+  } else {
+    sheet.clear();
+  }
+  sheet.appendRow(HEADERS);
+  sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold').setBackground('#fef3e2');
+  sheet.setFrozenRows(1);
+  sheet.autoResizeColumns(1, HEADERS.length);
 }
 
 function getSheet_() {

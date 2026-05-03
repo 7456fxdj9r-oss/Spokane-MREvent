@@ -42,6 +42,12 @@
             border-bottom: 1px solid #eee;
             padding-bottom: 5px;
         }
+        p.rate-help {
+            font-size: 12px;
+            color: #888;
+            margin: -4px 0 10px;
+            font-style: italic;
+        }
         label {
             display: block;
             font-size: 14px;
@@ -184,35 +190,73 @@
         <label for="invitedBy">Who invited you tonight? <span class="req">*</span></label>
         <input id="invitedBy" name="invitedBy" type="text" required>
 
-        <div class="section-title">A Few Quick Questions</div>
+        <div class="section-title">Rate the areas you wish were better</div>
+        <p class="rate-help">1 = doing great &nbsp;·&nbsp; 5 = really need help &nbsp;·&nbsp; leave blank if N/A</p>
 
-        <label>What brought you here tonight? <span class="req">*</span></label>
-        <div class="radio-row">
-            <label><input type="radio" name="whatBrought" value="Weight" required>Weight</label>
-            <label><input type="radio" name="whatBrought" value="Energy">Energy</label>
-            <label><input type="radio" name="whatBrought" value="Sleep">Sleep</label>
-            <label><input type="radio" name="whatBrought" value="Blood Sugar">Blood Sugar</label>
-            <label><input type="radio" name="whatBrought" value="Just Curious">Just Curious</label>
-            <label><input type="radio" name="whatBrought" value="Other">Other</label>
-        </div>
-
-        <label>Daily energy (1 = drained, 5 = great)</label>
+        <label>Energy</label>
         <div class="scale">
-            <label><input type="radio" name="energy" value="1"><span>1</span></label>
-            <label><input type="radio" name="energy" value="2"><span>2</span></label>
-            <label><input type="radio" name="energy" value="3"><span>3</span></label>
-            <label><input type="radio" name="energy" value="4"><span>4</span></label>
-            <label><input type="radio" name="energy" value="5"><span>5</span></label>
+            <label><input type="radio" name="rateEnergy" value="1"><span>1</span></label>
+            <label><input type="radio" name="rateEnergy" value="2"><span>2</span></label>
+            <label><input type="radio" name="rateEnergy" value="3"><span>3</span></label>
+            <label><input type="radio" name="rateEnergy" value="4"><span>4</span></label>
+            <label><input type="radio" name="rateEnergy" value="5"><span>5</span></label>
         </div>
 
-        <label>Sleep quality (1 = poor, 5 = excellent)</label>
+        <label>Sleep</label>
         <div class="scale">
-            <label><input type="radio" name="sleep" value="1"><span>1</span></label>
-            <label><input type="radio" name="sleep" value="2"><span>2</span></label>
-            <label><input type="radio" name="sleep" value="3"><span>3</span></label>
-            <label><input type="radio" name="sleep" value="4"><span>4</span></label>
-            <label><input type="radio" name="sleep" value="5"><span>5</span></label>
+            <label><input type="radio" name="rateSleep" value="1"><span>1</span></label>
+            <label><input type="radio" name="rateSleep" value="2"><span>2</span></label>
+            <label><input type="radio" name="rateSleep" value="3"><span>3</span></label>
+            <label><input type="radio" name="rateSleep" value="4"><span>4</span></label>
+            <label><input type="radio" name="rateSleep" value="5"><span>5</span></label>
         </div>
+
+        <label>Weight</label>
+        <div class="scale">
+            <label><input type="radio" name="rateWeight" value="1"><span>1</span></label>
+            <label><input type="radio" name="rateWeight" value="2"><span>2</span></label>
+            <label><input type="radio" name="rateWeight" value="3"><span>3</span></label>
+            <label><input type="radio" name="rateWeight" value="4"><span>4</span></label>
+            <label><input type="radio" name="rateWeight" value="5"><span>5</span></label>
+        </div>
+
+        <label>Cravings / blood sugar</label>
+        <div class="scale">
+            <label><input type="radio" name="rateCravings" value="1"><span>1</span></label>
+            <label><input type="radio" name="rateCravings" value="2"><span>2</span></label>
+            <label><input type="radio" name="rateCravings" value="3"><span>3</span></label>
+            <label><input type="radio" name="rateCravings" value="4"><span>4</span></label>
+            <label><input type="radio" name="rateCravings" value="5"><span>5</span></label>
+        </div>
+
+        <label>Mood / stress</label>
+        <div class="scale">
+            <label><input type="radio" name="rateMood" value="1"><span>1</span></label>
+            <label><input type="radio" name="rateMood" value="2"><span>2</span></label>
+            <label><input type="radio" name="rateMood" value="3"><span>3</span></label>
+            <label><input type="radio" name="rateMood" value="4"><span>4</span></label>
+            <label><input type="radio" name="rateMood" value="5"><span>5</span></label>
+        </div>
+
+        <label>Digestion</label>
+        <div class="scale">
+            <label><input type="radio" name="rateDigestion" value="1"><span>1</span></label>
+            <label><input type="radio" name="rateDigestion" value="2"><span>2</span></label>
+            <label><input type="radio" name="rateDigestion" value="3"><span>3</span></label>
+            <label><input type="radio" name="rateDigestion" value="4"><span>4</span></label>
+            <label><input type="radio" name="rateDigestion" value="5"><span>5</span></label>
+        </div>
+
+        <label>Community / connection</label>
+        <div class="scale">
+            <label><input type="radio" name="rateCommunity" value="1"><span>1</span></label>
+            <label><input type="radio" name="rateCommunity" value="2"><span>2</span></label>
+            <label><input type="radio" name="rateCommunity" value="3"><span>3</span></label>
+            <label><input type="radio" name="rateCommunity" value="4"><span>4</span></label>
+            <label><input type="radio" name="rateCommunity" value="5"><span>5</span></label>
+        </div>
+
+        <div class="section-title">A Couple More</div>
 
         <label>Tried a reset / cleanse / diet program before?</label>
         <div class="radio-row">
@@ -220,7 +264,7 @@
             <label><input type="radio" name="triedBefore" value="No">No</label>
         </div>
 
-        <label for="frustration">Biggest health frustration right now? (optional)</label>
+        <label for="frustration">Anything else on your mind? (optional)</label>
         <textarea id="frustration" name="frustration"></textarea>
 
         <div class="checkbox-row">
@@ -256,20 +300,25 @@
         statusEl.className = 'status';
         statusEl.textContent = '';
 
+        const pick = (n) => (form.querySelector('input[name=' + n + ']:checked') || {}).value || '';
         const data = {
             name: form.name.value.trim(),
             email: form.email.value.trim(),
             phone: form.phone.value.trim(),
             invitedBy: form.invitedBy.value.trim(),
-            whatBrought: (form.querySelector('input[name=whatBrought]:checked') || {}).value || '',
-            energy: (form.querySelector('input[name=energy]:checked') || {}).value || '',
-            sleep: (form.querySelector('input[name=sleep]:checked') || {}).value || '',
-            triedBefore: (form.querySelector('input[name=triedBefore]:checked') || {}).value || '',
+            rateEnergy: pick('rateEnergy'),
+            rateSleep: pick('rateSleep'),
+            rateWeight: pick('rateWeight'),
+            rateCravings: pick('rateCravings'),
+            rateMood: pick('rateMood'),
+            rateDigestion: pick('rateDigestion'),
+            rateCommunity: pick('rateCommunity'),
+            triedBefore: pick('triedBefore'),
             frustration: form.frustration.value.trim(),
             newsletter: form.newsletter.checked
         };
 
-        if (!data.name || !data.email || !data.invitedBy || !data.whatBrought) {
+        if (!data.name || !data.email || !data.invitedBy) {
             statusEl.className = 'status error';
             statusEl.textContent = 'Please fill in the required fields.';
             return;
