@@ -75,63 +75,81 @@
             margin-bottom: 18px;
         }
 
-        .poster .scale-block {
-            margin: 0 auto 12px;
-            padding: 12px;
-            background: linear-gradient(180deg, #fef3e2 0%, #fff 100%);
-            border-radius: 14px;
-        }
-        .poster .scale-block img {
-            display: block;
-            margin: 0 auto;
-            width: 2.6in;
-            height: auto;
-            border-radius: 10px;
-            background: #000;
-        }
-        .poster .scale-block .prize-label {
-            display: inline-block;
-            font-size: 10pt;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #fff;
-            background: var(--accent);
-            padding: 4px 14px;
-            border-radius: 12px;
-            margin: 8px 0 4px;
-        }
-        .poster .scale-block .prize-name {
-            font-size: 14pt;
-            font-weight: 700;
-            color: var(--ink);
-            margin: 0;
-        }
-
         .poster .qr-block {
-            margin: 6px 0 10px;
+            margin: 4px 0 10px;
         }
         .poster .qr-block img {
             display: block;
             margin: 0 auto;
-            width: 3.2in;
-            height: 3.2in;
+            width: 3.4in;
+            height: 3.4in;
             border: 6px solid #fff;
             box-shadow: 0 0 0 2px var(--accent);
         }
         .poster .scan-cta {
-            font-size: 22pt;
+            font-size: 18pt;
             font-weight: 800;
             color: var(--accent);
-            margin: 14px 0 4px;
+            margin: 10px 0 2px;
             letter-spacing: 1px;
         }
         .poster .url {
             font-family: 'SF Mono', Menlo, Consolas, monospace;
-            font-size: 9.5pt;
+            font-size: 10pt;
             color: var(--muted);
             margin-bottom: 10px;
             word-break: break-all;
+        }
+        .poster .contents-block {
+            background: #fef3e2;
+            border-radius: 10px;
+            padding: 10px 16px;
+            margin: 4px 0 10px;
+            text-align: left;
+        }
+        .poster .contents-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .poster .contents-list li {
+            font-size: 10.5pt;
+            color: var(--ink);
+            padding: 3px 0;
+            line-height: 1.35;
+        }
+        .poster .contents-list li strong { color: var(--accent); }
+        .poster .scale-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 8px 12px;
+            margin: 4px 0 8px;
+        }
+        .poster .scale-mini img {
+            width: 0.9in;
+            height: 0.9in;
+            border-radius: 6px;
+            background: #000;
+            flex-shrink: 0;
+        }
+        .poster .scale-mini .prize-label {
+            display: block;
+            font-size: 8.5pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+        }
+        .poster .scale-mini .prize-name {
+            display: block;
+            font-size: 11pt;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-top: 2px;
         }
 
         .poster .footer {
@@ -190,21 +208,32 @@
 
 <div class="poster">
     <div class="eyebrow">Metabolic Momentum</div>
-    <h1>Enter the<br><span class="accent">Raffle</span></h1>
-    <p class="lede">Win the same scale that tracks the metrics that matter.</p>
-
-    <div class="scale-block">
-        <img src="slides/renpho-scale.jpg" alt="RENPHO Smart Body Composition Scale">
-        <span class="prize-label">Tonight's Prize</span>
-        <p class="prize-name">RENPHO Smart Body Composition Scale</p>
-    </div>
+    <h1>Scan for<br><span class="accent">Everything</span></h1>
+    <p class="lede">Raffle · transformations · the science · save it to your phone</p>
 
     <div class="qr-block">
-        <img src="slides/qr-raffle.png" alt="Scan to enter the raffle">
+        <img src="slides/qr-hub.png" alt="Scan to open the resource hub">
     </div>
 
-    <p class="scan-cta">📱 Scan to Enter</p>
-    <p class="url">7456fxdj9r-oss.github.io/Spokane-MREvent/raffle.html</p>
+    <p class="scan-cta">📱 Scan with your camera</p>
+    <p class="url">7456fxdj9r-oss.github.io/Spokane-MREvent/</p>
+
+    <div class="contents-block">
+        <ul class="contents-list">
+            <li>🎟️ <strong>Enter the Raffle</strong> — win this RENPHO scale</li>
+            <li>📊 <strong>Kolby's Story</strong> — −95 lb in 8 months</li>
+            <li>📊 <strong>Cearra's Story</strong> — −45 lb, lean mass preserved</li>
+            <li>🧠 <strong>Why It Works</strong> — the science in plain English</li>
+        </ul>
+    </div>
+
+    <div class="scale-mini">
+        <img src="slides/renpho-scale.jpg" alt="RENPHO Smart Body Composition Scale">
+        <div>
+            <span class="prize-label">Tonight's Prize</span>
+            <span class="prize-name">RENPHO Smart Body Composition Scale</span>
+        </div>
+    </div>
 
     <div class="footer">
         Hosted by <span class="brand">Craig Blanchette</span> · One winner drawn live · Must be present to win
