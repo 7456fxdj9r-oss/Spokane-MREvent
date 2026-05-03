@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Metabolic Dysfunction — Notes</title>
+    <style>
+        :root { --accent: #d35400; --ink: #222; --muted: #555; }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: var(--ink);
+            line-height: 1.45;
+            max-width: 7.5in;
+            margin: 0.5in auto;
+            padding: 0 0.4in;
+            font-size: 11.5pt;
+        }
+        h1 {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 22pt;
+            color: var(--accent);
+            margin: 0 0 4px;
+            letter-spacing: 0.5px;
+        }
+        h2 {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 13pt;
+            color: var(--accent);
+            margin: 18px 0 6px;
+            border-bottom: 1px solid #e8c8a4;
+            padding-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-style: italic;
+            font-size: 11pt;
+            margin: 0 0 8px;
+        }
+        .citation {
+            font-size: 9.5pt;
+            color: var(--muted);
+            margin: 8px 0;
+            line-height: 1.35;
+        }
+        .takeaway {
+            background: #fef3e2;
+            border-left: 3px solid var(--accent);
+            padding: 10px 14px;
+            margin: 10px 0 16px;
+            font-size: 12pt;
+        }
+        .takeaway strong { color: var(--accent); }
+        ul { margin: 4px 0 4px 22px; padding: 0; }
+        li { margin: 3px 0; }
+        .stat-row {
+            display: table;
+            width: 100%;
+            margin: 6px 0 14px;
+        }
+        .stat {
+            display: table-cell;
+            width: 33.33%;
+            padding: 8px 6px;
+            text-align: center;
+            border-right: 1px solid #e8c8a4;
+        }
+        .stat:last-child { border-right: none; }
+        .stat .big {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 22pt;
+            color: var(--accent);
+            font-weight: 800;
+            line-height: 1;
+            display: block;
+        }
+        .stat .label {
+            font-size: 9.5pt;
+            color: var(--muted);
+            display: block;
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+        .markers {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 10.5pt;
+            margin: 4px 0 10px;
+        }
+        .markers th, .markers td {
+            border: 1px solid #d8c8b8;
+            padding: 5px 8px;
+            text-align: left;
+        }
+        .markers th {
+            background: #fef3e2;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .talking-point {
+            background: #f7f3ed;
+            padding: 6px 10px;
+            margin: 4px 0;
+            border-radius: 3px;
+            font-size: 10.5pt;
+            font-style: italic;
+            color: #4a3a20;
+        }
+        .talking-point::before { content: '🎤 '; font-style: normal; }
+        .footer {
+            margin-top: 20px;
+            font-size: 9pt;
+            color: var(--muted);
+            border-top: 1px solid #ddd;
+            padding-top: 8px;
+        }
+        @media print {
+            body { margin: 0.4in; padding: 0; max-width: none; font-size: 10.5pt; }
+            h1 { font-size: 18pt; }
+            h2 { font-size: 12pt; }
+            .takeaway { background: #fff; }
+            .talking-point { background: #fff; }
+            .markers th { background: #fff; border-bottom: 2px solid var(--accent); }
+            .stat .big { font-size: 18pt; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Metabolic Dysfunction</h1>
+<p class="subtitle">What it is, why it matters, and why almost everyone in the room is touched by it.</p>
+
+<div class="takeaway">
+    <strong>Bottom line:</strong> Only <strong>1 in 8 American adults</strong> are metabolically healthy. The other 7 are somewhere on a spectrum of dysfunction that drives diabetes, heart disease, stroke, and the leading causes of preventable death — and it's largely reversible with the right inputs.
+</div>
+
+<h2>The Headline Stats</h2>
+<div class="stat-row">
+    <div class="stat">
+        <span class="big">12.2%</span>
+        <span class="label">of US adults are metabolically healthy<br>(Araújo 2019, NHANES 2009–2016)</span>
+    </div>
+    <div class="stat">
+        <span class="big">~38%</span>
+        <span class="label">meet criteria for metabolic syndrome<br>(NHANES 2017–18)</span>
+    </div>
+    <div class="stat">
+        <span class="big">0.5%</span>
+        <span class="label">of adults with obesity are metabolically healthy<br>(Araújo 2019)</span>
+    </div>
+</div>
+
+<h2>What "Metabolically Healthy" Actually Means</h2>
+<p>Araújo et al. (2019) defined it as having all <strong>five</strong> of these in the optimal range — and not being on medication for any of them:</p>
+
+<table class="markers">
+    <thead>
+        <tr><th>Marker</th><th>Optimal threshold</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Waist circumference</td><td>&lt; 102 cm (40 in) men · &lt; 88 cm (35 in) women</td></tr>
+        <tr><td>Fasting glucose &amp; A1c</td><td>Glucose &lt; 100 mg/dL · A1c &lt; 5.7%</td></tr>
+        <tr><td>Blood pressure</td><td>Systolic &lt; 120 · Diastolic &lt; 80 mmHg</td></tr>
+        <tr><td>Triglycerides</td><td>&lt; 150 mg/dL</td></tr>
+        <tr><td>HDL cholesterol</td><td>≥ 40 mg/dL men · ≥ 50 mg/dL women</td></tr>
+    </tbody>
+</table>
+<p style="font-size:9.5pt;color:var(--muted);margin-top:-4px;">Miss <strong>any one</strong> of these (or be on a med for it), and you're not metabolically healthy by this definition.</p>
+
+<h2>The Connection to Diabetes, Blood Pressure &amp; Cholesterol</h2>
+<p>The same biology that drives one drives the others. Insulin resistance — cells stop responding to insulin — is the upstream lever:</p>
+<ul>
+    <li><strong>Diabetes &amp; pre-diabetes:</strong> insulin resistance → blood sugar rises → A1c climbs.</li>
+    <li><strong>High blood pressure:</strong> insulin resistance increases sodium retention and stiffens vessels → BP rises.</li>
+    <li><strong>"High cholesterol":</strong> insulin resistance raises triglycerides, lowers HDL, and shifts LDL toward small dense particles — the pattern that actually predicts heart disease.</li>
+</ul>
+
+<div class="talking-point">When someone tells me they have diabetes <em>and</em> high blood pressure <em>and</em> high cholesterol, I don't think "three problems." I think "one problem with three faces."</div>
+
+<h2>Who's Most Affected</h2>
+<ul>
+    <li><strong>Weight matters, but isn't the whole story:</strong> Among adults at a "normal" BMI, only ~1 in 3 are metabolically healthy. Among adults with obesity, it's 1 in 200 (Araújo 2019).</li>
+    <li><strong>It's getting worse:</strong> Metabolic syndrome rose from 25.3% in 1988–94 to ~38% in 2017–18 (NHANES).</li>
+    <li><strong>It's hitting younger:</strong> the 20–39 age group has shown the largest recent increases.</li>
+    <li><strong>What helps:</strong> never smoking, vigorous physical activity, lower BMI, more education — and structured nutrition interventions (see Arterburn 2019 notes).</li>
+</ul>
+
+<h2>The Good News — It's Reversible</h2>
+<ul>
+    <li>Even <strong>5–10% weight loss</strong> dramatically improves blood sugar, BP, triglycerides, and HDL — and often gets people off medication.</li>
+    <li>The Arterburn 2019 trial showed structured programs producing <strong>5–6% loss in 16 weeks</strong>, with more than 1 in 4 OPTAVIA participants losing &gt;10%.</li>
+    <li>Walking 30 min/day, prioritizing protein, and lowering refined carbs have all been shown to move these markers in the right direction.</li>
+    <li>The biggest single predictor in the data: <strong>support and accountability</strong>. Coaching contact correlated more strongly with outcomes than the diet itself.</li>
+</ul>
+
+<h2>What to Say On Stage</h2>
+<div class="talking-point">"If only 1 in 8 American adults is metabolically healthy, then when you raised your hand a minute ago — that wasn't a quirk of this room. That's the country."</div>
+<div class="talking-point">"Diabetes, high blood pressure, high cholesterol — these aren't three different diseases. They're three windows looking into the same room. The room is metabolic dysfunction."</div>
+<div class="talking-point">"The body that got you into this can get you out. Five to ten percent weight loss is enough to move every single one of these markers — and we have the data to prove it."</div>
+
+<h2>Citations</h2>
+<p class="citation">
+    Araújo J, Cai J, Stevens J. <em>Prevalence of Optimal Metabolic Health in American Adults: National Health and Nutrition Examination Survey 2009–2016.</em> <strong>Metabolic Syndrome and Related Disorders</strong>, 2019;17(1):46–52. doi:10.1089/met.2018.0105
+</p>
+<p class="citation">
+    Hirode G, Wong RJ. <em>Trends in the Prevalence of Metabolic Syndrome in the United States, 2011–2016.</em> <strong>JAMA</strong>, 2020;323(24):2526–2528.
+</p>
+<p class="citation">
+    Liang X et al. <em>Prevalence of metabolic syndrome in the United States National Health and Nutrition Examination Survey 2011–18.</em> <strong>Postgraduate Medical Journal</strong>, 2023;99(1175):985–992.
+</p>
+<p class="citation">
+    Arterburn LM et al. <em>Randomized controlled trial assessing two commercial weight loss programs in adults with overweight or obesity.</em> <strong>Obesity Science &amp; Practice</strong>, 2019;5(1):3–14.
+</p>
+
+<div class="footer">
+    Speaker notes / handout. Always cite the original sources when quoting figures. Numbers verified against published abstracts and full-text papers; deeper claims warrant a full read of the cited studies before public use.
+</div>
+
+</body>
+</html>

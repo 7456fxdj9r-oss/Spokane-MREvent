@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arterburn 2019 — Notes</title>
+    <style>
+        :root { --accent: #d35400; --ink: #222; --muted: #555; }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: var(--ink);
+            line-height: 1.45;
+            max-width: 7.5in;
+            margin: 0.5in auto;
+            padding: 0 0.4in;
+            font-size: 11.5pt;
+        }
+        h1 {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 22pt;
+            color: var(--accent);
+            margin: 0 0 4px;
+            letter-spacing: 0.5px;
+        }
+        h2 {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 13pt;
+            color: var(--accent);
+            margin: 18px 0 6px;
+            border-bottom: 1px solid #e8c8a4;
+            padding-bottom: 3px;
+            letter-spacing: 0.3px;
+        }
+        .subtitle {
+            color: var(--muted);
+            font-style: italic;
+            font-size: 11pt;
+            margin: 0 0 8px;
+        }
+        .citation {
+            font-size: 9.5pt;
+            color: var(--muted);
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+        .takeaway {
+            background: #fef3e2;
+            border-left: 3px solid var(--accent);
+            padding: 10px 14px;
+            margin: 10px 0 16px;
+            font-size: 12pt;
+        }
+        .takeaway strong { color: var(--accent); }
+        ul { margin: 4px 0 4px 22px; padding: 0; }
+        li { margin: 3px 0; }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 6px 0 10px;
+            font-size: 10.5pt;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #d8c8b8;
+            padding: 5px 8px;
+            text-align: left;
+        }
+        th {
+            background: #fef3e2;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        td.num { text-align: right; font-variant-numeric: tabular-nums; }
+        .talking-point {
+            background: #f7f3ed;
+            padding: 6px 10px;
+            margin: 4px 0;
+            border-radius: 3px;
+            font-size: 10.5pt;
+            font-style: italic;
+            color: #4a3a20;
+        }
+        .talking-point::before { content: '🎤 '; font-style: normal; }
+        .footer {
+            margin-top: 20px;
+            font-size: 9pt;
+            color: var(--muted);
+            border-top: 1px solid #ddd;
+            padding-top: 8px;
+        }
+        @media print {
+            body { margin: 0.4in; padding: 0; max-width: none; font-size: 10.5pt; }
+            h1 { font-size: 18pt; }
+            h2 { font-size: 12pt; }
+            .takeaway { background: #fff; border-left-width: 3px; }
+            .talking-point { background: #fff; }
+            th { background: #fff; border-bottom: 2px solid var(--accent); }
+        }
+    </style>
+</head>
+<body>
+
+<h1>The Arterburn 2019 Study</h1>
+<p class="subtitle">Two commercial weight-loss programs vs. a self-directed diet — what the data showed.</p>
+
+<p class="citation">
+Arterburn LM, Coleman CD, Kiel J, Kelley K, Mantilla L, Frye N, Sanoshy K, Cook CM. <em>Randomized controlled trial assessing two commercial weight loss programs in adults with overweight or obesity.</em> <strong>Obesity Science &amp; Practice</strong>, 2019;5(1):3–14. doi:10.1002/osp4.312 · ClinicalTrials.gov NCT02835092.
+</p>
+
+<div class="takeaway">
+    <strong>Bottom line:</strong> Over 16 weeks, structured meal-replacement programs produced <strong>~25× more weight loss</strong> than a self-directed reduced-calorie diet — and people who got <strong>more coaching</strong> lost <strong>more than 2× as much</strong> weight as those who got less.
+</div>
+
+<h2>Study at a Glance</h2>
+<ul>
+    <li><strong>Design:</strong> 16-week, 3-arm randomized controlled trial. Single site (Chicago), 2016–2017.</li>
+    <li><strong>Participants:</strong> 198 adults (81% women, mean age 46, mean BMI 34.2). 92% completed.</li>
+    <li><strong>The 3 arms:</strong>
+        <ul>
+            <li><strong>OPTAVIA 5&amp;1 (with coaching)</strong> — 5 fuelings + 1 lean &amp; green meal/day, 23 prescribed coaching calls.</li>
+            <li><strong>Medifast 4&amp;2&amp;1 (self-guided)</strong> — 4 meal replacements + 2 lean &amp; green + 1 snack, no structured coaching.</li>
+            <li><strong>Control</strong> — self-directed reduced-calorie diet (USDA MyPlate), one 10–15 minute intro session.</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Headline Results — Weight Loss</h2>
+<table>
+    <thead>
+        <tr><th>Group</th><th>Weight loss (kg)</th><th>% of body weight</th><th>Lost ≥ 5%</th><th>Lost ≥ 10%</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>OPTAVIA (coached)</strong></td><td class="num">−5.2 kg (~11.5 lb)</td><td class="num">−5.7%</td><td class="num">56.3%</td><td class="num">28.1%</td></tr>
+        <tr><td><strong>Medifast (self-guided)</strong></td><td class="num">−5.0 kg (~11.0 lb)</td><td class="num">−5.0%</td><td class="num">49.3%</td><td class="num">14.9%</td></tr>
+        <tr><td><strong>Control (self-directed)</strong></td><td class="num">−0.2 kg (~0.4 lb)</td><td class="num">−0.2%</td><td class="num">1.6%</td><td class="num">1.6%</td></tr>
+    </tbody>
+</table>
+<p style="font-size:9.5pt;color:var(--muted);margin-top:-4px;">Both programs vs. control: p &lt; 0.0001.</p>
+
+<h2>It Wasn't Just Weight — It Was the Right Weight</h2>
+<ul>
+    <li><strong>Fat mass (DXA):</strong> OPTAVIA lost 4.5 kg of fat (−10.8% of fat mass). Medifast lost 3.75 kg (−8.2%). Control: −0.22 kg.</li>
+    <li><strong>Visceral (belly) fat:</strong> OPTAVIA −239 g, Medifast −236 g, Control −8 g.</li>
+    <li><strong>Waist circumference:</strong> OPTAVIA −6.2 cm, Medifast −5.2 cm, Control −2.3 cm.</li>
+    <li><strong>Hip circumference:</strong> OPTAVIA −4.1 cm, Medifast −3.6 cm, Control −0.3 cm.</li>
+    <li><strong>Inflammation (hsCRP):</strong> Significantly lower in OPTAVIA completers vs. control (−1.33 vs. 0.00 mg/L).</li>
+</ul>
+
+<h2>The Coaching Effect</h2>
+<ul>
+    <li>OPTAVIA participants attended a mean of <strong>16.1 of 23</strong> prescribed coaching calls.</li>
+    <li>Those who completed <strong>≥17 calls lost 6.9 kg</strong>; those completing fewer lost only <strong>3.1 kg</strong> — <strong>2.3× more weight</strong> with more coaching.</li>
+    <li>83.3% of those who used the discretionary coaching network achieved ≥5% loss vs. 34.6% who didn't (p = 0.002).</li>
+</ul>
+
+<div class="talking-point">Support isn't a "nice to have" — in this trial, it was the single biggest predictor of who lost weight and who didn't.</div>
+
+<h2>Safety</h2>
+<ul>
+    <li>No serious adverse events were related to the interventions. (4 SAEs across all groups: knee surgery, tonsillectomy, renal failure in MED, transient ischemic attack in control — none judged related.)</li>
+    <li>Mild GI events (looser bowels, bloating, constipation) more common on the meal-replacement plans, all mild–moderate.</li>
+</ul>
+
+<h2>Honest Limitations (so you don't get cornered on Q&amp;A)</h2>
+<ul>
+    <li>Open-label — participants knew which group they were in.</li>
+    <li>Single Chicago site; generalizability beyond that population is limited.</li>
+    <li>Study coaches lacked the experience of real-world OPTAVIA coaches; commercial users also have a community network this study deliberately stripped out — so real-world results could plausibly run higher <em>or</em> lower.</li>
+    <li>Funded by Medifast, Inc. (disclosed). Independent peer-reviewed publication.</li>
+</ul>
+
+<h2>What to Say On Stage</h2>
+<div class="talking-point">"This isn't a story about willpower. It's a story about structure and support. Without those, in 16 weeks, the average person lost less than half a pound."</div>
+<div class="talking-point">"With structured meals plus coaching, more than 1 in 4 lost 10% or more of their body weight. That's not a tweak — that's a different person walking out of the room."</div>
+<div class="talking-point">"The people who showed up to coaching lost more than twice as much as the people who didn't. That's the part nobody wants to hear and everybody needs to hear."</div>
+
+<div class="footer">
+    Source: Arterburn et al., 2019 — full open-access text at pmc.ncbi.nlm.nih.gov/articles/PMC6381299. Always cite the original when quoting numbers.
+</div>
+
+</body>
+</html>
