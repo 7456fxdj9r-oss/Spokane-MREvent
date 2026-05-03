@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cue Sheet — Metabolic Momentum</title>
+<style>
+    @page { size: letter landscape; margin: 0.3in; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        font-size: 8pt;
+        color: #1a252f;
+        line-height: 1.22;
+        background: #fff;
+    }
+
+    .header {
+        border-bottom: 2px solid #d35400;
+        padding-bottom: 3px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    .header h1 { font-size: 14pt; color: #d35400; letter-spacing: 0.5px; }
+    .header .by { font-size: 8pt; color: #777; font-style: italic; }
+
+    .tech-bar {
+        background: #fef3e2;
+        border: 1px solid #e6c898;
+        border-radius: 3px;
+        padding: 4px 8px;
+        margin-bottom: 6px;
+        font-size: 7.5pt;
+        display: flex;
+        gap: 14px;
+        justify-content: space-between;
+    }
+    .tech-bar div { line-height: 1.3; }
+    .tech-bar strong { color: #d35400; text-transform: uppercase; letter-spacing: 0.5px; font-size: 6.5pt; display: block; }
+    .tech-bar code { font-family: 'SF Mono', Menlo, monospace; font-size: 7pt; }
+
+    .columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .step {
+        border-left: 3px solid #f39c12;
+        padding: 2px 0 2px 7px;
+        margin-bottom: 4px;
+        page-break-inside: avoid;
+    }
+    .step .head {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+    }
+    .step .num {
+        background: #d35400;
+        color: #fff;
+        font-weight: 800;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        text-align: center;
+        border-radius: 50%;
+        font-size: 8.5pt;
+        flex-shrink: 0;
+    }
+    .step .title {
+        font-weight: 700;
+        font-size: 9.5pt;
+    }
+    .step .time {
+        margin-left: auto;
+        color: #888;
+        font-size: 7.5pt;
+        font-weight: 600;
+    }
+    .step .body {
+        margin-top: 2px;
+        padding-left: 22px;
+    }
+    .step .say,
+    .step .do,
+    .step .substep {
+        margin-top: 1px;
+    }
+    .step .say::before {
+        content: "SAY ";
+        background: #d35400;
+        color: #fff;
+        font-weight: 800;
+        font-size: 6pt;
+        padding: 1px 4px;
+        border-radius: 2px;
+        margin-right: 4px;
+        letter-spacing: 0.5px;
+    }
+    .step .do::before {
+        content: "DO ";
+        background: #2c3e50;
+        color: #fff;
+        font-weight: 800;
+        font-size: 6pt;
+        padding: 1px 4px;
+        border-radius: 2px;
+        margin-right: 4px;
+        letter-spacing: 0.5px;
+    }
+    .step .say { font-style: italic; color: #333; }
+    .step .do  { color: #444; }
+    .step .substep {
+        padding-left: 0;
+        margin-top: 3px;
+    }
+    .substep .lbl {
+        display: inline-block;
+        font-weight: 700;
+        color: #d35400;
+        font-size: 7.5pt;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-width: 56px;
+    }
+    .substep .substep-line { font-style: italic; color: #333; }
+    .substep .substep-do  { color: #555; font-size: 7.5pt; }
+
+    .footer {
+        margin-top: 6px;
+        border-top: 1px solid #ddd;
+        padding-top: 4px;
+        font-size: 7pt;
+        color: #666;
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+    }
+    .footer code { font-family: 'SF Mono', Menlo, monospace; }
+    .footer strong { color: #2c3e50; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>METABOLIC MOMENTUM — RUN OF SHOW</h1>
+    <div class="by">Hosted by Melissa &amp; Jon's Team</div>
+</div>
+
+<div class="tech-bar">
+    <div><strong>Speaker tabs</strong>
+        Tab 1: <code>presentation.html</code> · Tab 2: <code>wheel.html</code> (live counter)
+    </div>
+    <div><strong>Deck shortcuts</strong>
+        ← → = nav · space = next · F = fullscreen
+    </div>
+    <div><strong>TV</strong>
+        Google Photos cycling 4 slides
+    </div>
+    <div><strong>Lectern</strong>
+        Arterburn + Dysfunction notes
+    </div>
+</div>
+
+<div class="columns">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">1</span>
+                <span class="title">Doors / mingling</span>
+                <span class="time">T+0 → T+15</span>
+            </div>
+            <div class="body">
+                <div class="do">TV cycles slides 1–4 · deck on slide 1 · wheel.html open in tab 2 (counter live)</div>
+                <div class="say">(informal) "Scan the QR — story's on your phone before I say a word."</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">2</span>
+                <span class="title">Welcome</span>
+                <span class="time">T+15 (~1 min)</span>
+            </div>
+            <div class="body">
+                <div class="do">Deck → <strong>slide 2</strong> · TV stays on slide 1</div>
+                <div class="say">"Welcome to Metabolic Momentum. The most important question in fat loss: what kind of weight are you actually losing? Because not all of it is the same."</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">3</span>
+                <span class="title">Hand-raise opener</span>
+                <span class="time">T+17 (~2 min)</span>
+            </div>
+            <div class="body">
+                <div class="do">Deck → <strong>slide 3</strong> · tap space between each prompt to reveal</div>
+                <div class="say">"Raise your hand if…<br>
+                    &nbsp;&nbsp;…you've lost weight before and gained it back.<br>
+                    &nbsp;&nbsp;…you've ended a diet smaller but feeling weaker.<br>
+                    &nbsp;&nbsp;…you don't know what your body fat % is.<br>
+                    &nbsp;&nbsp;…you'd take 20 lbs off if it cost you nothing."</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">4</span>
+                <span class="title">Get them on the hub</span>
+                <span class="time">T+20 (~1 min)</span>
+            </div>
+            <div class="body">
+                <div class="do">Deck → <strong>slide 4</strong> (hub QR) · TV → <strong>slide 1</strong></div>
+                <div class="say">"Pull out your phones. Camera at the QR. That's the hub — Cearra, Kolby, the science, and the raffle. Get there now so you can follow along when I point at numbers."</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">5</span>
+                <span class="title">Cearra's story</span>
+                <span class="time">T+22 (~5 min)</span>
+            </div>
+            <div class="body">
+                <div class="substep">
+                    <span class="lbl">5a · Day One</span>
+                    <div class="substep-do">Deck → <strong>slide 5</strong> · TV → <strong>slide 2 (Cearra)</strong></div>
+                    <span class="substep-line">"August 2025. 217 lb. Body fat 52% — more than half of what was on the scale wasn't her, it was fat tissue. Hold onto that."</span>
+                </div>
+                <div class="substep">
+                    <span class="lbl">5b · Then &amp; Now</span>
+                    <div class="substep-do">Deck → <strong>slide 6</strong></div>
+                    <span class="substep-line">"Eight months. Body fat down 12 points. Lean mass actually up 1.2 lb. Skeletal muscle held. This is recomposition."</span>
+                </div>
+                <div class="substep">
+                    <span class="lbl">5c · Chart</span>
+                    <div class="substep-do">Deck → <strong>slide 7</strong></div>
+                    <span class="substep-line">"This is the picture. Orange — weight, crashing. Red — body fat %, crashing. Green — lean mass, dead flat. Most diets take all three down together. Cearra didn't."</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">6</span>
+                <span class="title">Kolby's story</span>
+                <span class="time">T+27 (~5 min)</span>
+            </div>
+            <div class="body">
+                <div class="substep">
+                    <span class="lbl">6a · Day One</span>
+                    <div class="substep-do">Deck → <strong>slide 8</strong> · TV → <strong>slide 3 (Kolby)</strong></div>
+                    <span class="substep-line">"Same August. Kolby — 350 lbs, body fat 44.6%. Different starting point, same protocol."</span>
+                </div>
+                <div class="substep">
+                    <span class="lbl">6b · Then &amp; Now</span>
+                    <div class="substep-do">Deck → <strong>slide 9</strong></div>
+                    <span class="substep-line">"95 pounds gone. Body fat halved — 44.6 down to 27%. Skeletal muscle UP 2 pounds. Read that twice."</span>
+                </div>
+                <div class="substep">
+                    <span class="lbl">6c · Chart</span>
+                    <div class="substep-do">Deck → <strong>slide 10</strong></div>
+                    <span class="substep-line">"Same picture, different person. Orange crashing, red crashing, green flat at 184. He didn't shrink. He recomposed."</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">7</span>
+                <span class="title">The science</span>
+                <span class="time">T+32 (~5 min)</span>
+            </div>
+            <div class="body">
+                <div class="do">Stay on <strong>slide 10</strong> (chart as anchor) · printed notes on lectern</div>
+                <div class="say">[Your script.] Metabolic dysfunction → why most diets fail. Arterburn 2019 → what works. "For the deep dive, the Why It Works page on the hub has it written up."</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">8</span>
+                <span class="title">Last call for the raffle</span>
+                <span class="time">T+37 (~2 min)</span>
+            </div>
+            <div class="body">
+                <div class="do">TV → <strong>slide 4 (raffle)</strong> · flip laptop to <code>wheel.html</code> tab · read entry count out loud</div>
+                <div class="say">"We've got [N] entries in the wheel. Anyone who hasn't entered — scan the QR on the screen, takes 30 seconds. Prize: the same RENPHO scale Cearra and Kolby use to track these numbers every week. Drawing in two minutes."</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">9</span>
+                <span class="title">The drawing</span>
+                <span class="time">T+39 (~2 min)</span>
+            </div>
+            <div class="body">
+                <div class="do">Project <code>wheel.html</code> full screen · click <strong>SPIN</strong> · winner banner appears</div>
+                <div class="say">"Last refresh — [N] entries. Spinning… Winner — [name]! Come grab your scale."</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="head">
+                <span class="num">10</span>
+                <span class="title">Wrap</span>
+                <span class="time">T+42 (~2 min)</span>
+            </div>
+            <div class="body">
+                <div class="do">Deck → <strong>slide 11</strong> ("Let's Go.") · TV → <strong>slide 1</strong></div>
+                <div class="say">"Two takeaways. One — fat loss without lean loss is real, you just saw two examples. Two — if you want to do this yourself or help others do it, the apprentice checkbox on the raffle was your signal. We'll be in touch this week. Thanks for being here."</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    <div>
+        <strong>If something breaks:</strong>
+        wheel won't load → refresh the tab · QR won't scan → backup at <code>7456fxdj9r-oss.github.io/Spokane-MREvent/</code> · entries missing → check Apps Script deployment is live
+    </div>
+    <div>
+        <strong>Total runtime:</strong> ~45 min
+    </div>
+</div>
+
+</body>
+</html>
