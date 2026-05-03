@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raffle Wheel — Metabolic Momentum</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+            color: #fff;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 30px 15px;
+            box-sizing: border-box;
+        }
+        h1 {
+            margin: 0 0 5px;
+            color: #f39c12;
+            font-size: 32px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .subtitle {
+            margin: 0 0 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+            text-align: center;
+        }
+        .stats {
+            font-size: 14px;
+            color: #ecf0f1;
+            margin-bottom: 18px;
+        }
+        .stats span { color: #f39c12; font-weight: bold; }
+        .wheel-stage {
+            position: relative;
+            width: min(90vw, 520px);
+            height: min(90vw, 520px);
+            margin-bottom: 20px;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-top: 30px solid #e74c3c;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+            z-index: 2;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .btn-spin {
+            background: #e74c3c;
+            color: #fff;
+            font-size: 18px;
+            padding: 16px 40px;
+        }
+        .btn-spin:hover:not(:disabled) { background: #c0392b; }
+        .btn-spin:disabled { background: #555; cursor: not-allowed; }
+        .btn-secondary {
+            background: #34495e;
+            color: #fff;
+        }
+        .btn-secondary:hover { background: #2c3e50; }
+        .winner-banner {
+            margin-top: 10px;
+            padding: 18px 24px;
+            background: rgba(243, 156, 18, 0.15);
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            font-size: 22px;
+            text-align: center;
+            min-width: 280px;
+            display: none;
+        }
+        .winner-banner.show { display: block; animation: pop 0.5s ease-out; }
+        .winner-banner .label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #f39c12;
+            margin-bottom: 5px;
+        }
+        .winner-banner .name {
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            60% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #bdc3c7;
+        }
+        .error-state {
+            color: #e74c3c;
+            text-align: center;
+            margin: 20px;
+        }
+        .past-winners {
+            margin-top: 25px;
+            color: #95a5a6;
+            font-size: 13px;
+            text-align: center;
+        }
+        .past-winners ul {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0;
+        }
+        .past-winners li {
+            padding: 3px 0;
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎡 Raffle Wheel</h1>
+<p class="subtitle">Metabolic Momentum — Spokane</p>
+
+<div class="stats" id="stats">Loading entries...</div>
+
+<div class="wheel-stage" id="stage" style="display:none;">
+    <div class="pointer"></div>
+    <canvas id="wheel" width="600" height="600"></canvas>
+</div>
+
+<div class="empty-state" id="emptyState" style="display:none;">
+    No entries yet. Send people to <strong>raffle.html</strong>!
+    <div style="margin-top:15px;">
+        <button class="btn-secondary" onclick="loadEntries()">Refresh</button>
+    </div>
+</div>
+
+<div class="error-state" id="errorState" style="display:none;"></div>
+
+<div class="controls" id="controls" style="display:none;">
+    <button class="btn-spin" id="spinBtn">SPIN</button>
+    <button class="btn-secondary" id="refreshBtn">Refresh entries</button>
+    <button class="btn-secondary" id="resetBtn">Reset wheel</button>
+</div>
+
+<div class="winner-banner" id="winnerBanner">
+    <span class="label">Winner</span>
+    <span class="name" id="winnerName"></span>
+</div>
+
+<div class="past-winners" id="pastWinners" style="display:none;">
+    <strong>Already drawn:</strong>
+    <ul id="pastList"></ul>
+</div>
+
+<script>
+    // Apps Script web app URL — paste the deployment URL here after deploying Code.gs.
+    const SCRIPT_URL = '__SCRIPT_URL__';
+
+    const COLORS = ['#e74c3c','#f39c12','#27ae60','#2980b9','#8e44ad','#16a085','#d35400','#c0392b','#2c3e50','#7f8c8d'];
+
+    let allEntries = [];      // full list from sheet
+    let activeEntries = [];   // not yet drawn
+    let winners = [];
+    let rotation = 0;         // current rotation in radians
+    let spinning = false;
+
+    const canvas = document.getElementById('wheel');
+    const ctx = canvas.getContext('2d');
+    const stage = document.getElementById('stage');
+    const stats = document.getElementById('stats');
+    const emptyState = document.getElementById('emptyState');
+    const errorState = document.getElementById('errorState');
+    const controls = document.getElementById('controls');
+    const spinBtn = document.getElementById('spinBtn');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const winnerBanner = document.getElementById('winnerBanner');
+    const winnerName = document.getElementById('winnerName');
+    const pastWinners = document.getElementById('pastWinners');
+    const pastList = document.getElementById('pastList');
+
+    function setUI() {
+        stats.innerHTML = `<span>${activeEntries.length}</span> in the wheel · <span>${winners.length}</span> drawn · <span>${allEntries.length}</span> total`;
+        if (allEntries.length === 0) {
+            stage.style.display = 'none';
+            controls.style.display = 'none';
+            emptyState.style.display = 'block';
+        } else {
+            emptyState.style.display = 'none';
+            stage.style.display = 'block';
+            controls.style.display = 'flex';
+        }
+        if (activeEntries.length === 0 && allEntries.length > 0) {
+            spinBtn.disabled = true;
+            spinBtn.textContent = 'No entries left';
+        } else {
+            spinBtn.disabled = spinning;
+            spinBtn.textContent = spinning ? 'Spinning...' : 'SPIN';
+        }
+        if (winners.length > 0) {
+            pastWinners.style.display = 'block';
+            pastList.innerHTML = winners.map(w => `<li>${escapeHtml(w)}</li>`).join('');
+        } else {
+            pastWinners.style.display = 'none';
+        }
+    }
+
+    function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function drawWheel() {
+        const w = canvas.width, h = canvas.height;
+        const cx = w / 2, cy = h / 2;
+        const r = Math.min(cx, cy) - 10;
+        ctx.clearRect(0, 0, w, h);
+
+        if (activeEntries.length === 0) {
+            ctx.fillStyle = '#34495e';
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#bdc3c7';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('All entries drawn', cx, cy);
+            return;
+        }
+
+        const n = activeEntries.length;
+        const slice = (Math.PI * 2) / n;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rotation);
+
+        for (let i = 0; i < n; i++) {
+            const start = i * slice - Math.PI / 2; // start at top
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.arc(0, 0, r, start, start + slice);
+            ctx.closePath();
+            ctx.fillStyle = COLORS[i % COLORS.length];
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // text
+            ctx.save();
+            ctx.rotate(start + slice / 2);
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#fff';
+            const fontSize = Math.max(11, Math.min(22, 260 / n));
+            ctx.font = `bold ${fontSize}px sans-serif`;
+            const name = activeEntries[i].name;
+            const maxLen = n > 20 ? 14 : (n > 10 ? 20 : 28);
+            const display = name.length > maxLen ? name.slice(0, maxLen - 1) + '…' : name;
+            ctx.fillText(display, r - 15, 0);
+            ctx.restore();
+        }
+
+        // hub
+        ctx.beginPath();
+        ctx.arc(0, 0, 30, 0, Math.PI * 2);
+        ctx.fillStyle = '#1a252f';
+        ctx.fill();
+        ctx.strokeStyle = '#f39c12';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    function spin() {
+        if (spinning || activeEntries.length === 0) return;
+        spinning = true;
+        winnerBanner.classList.remove('show');
+        setUI();
+
+        const n = activeEntries.length;
+        const slice = (Math.PI * 2) / n;
+        const winnerIdx = Math.floor(Math.random() * n);
+
+        // pointer is at top (-Math.PI/2). slice i center angle (with rotation 0) is:
+        // start = -PI/2 + i*slice, center = start + slice/2
+        // We want final rotation R such that pointer angle (-PI/2) sits in slice winnerIdx:
+        // -PI/2 == (-PI/2 + winnerIdx*slice + slice/2 + R) mod 2PI  → R = -winnerIdx*slice - slice/2 (mod 2PI)
+        const targetBase = -winnerIdx * slice - slice / 2;
+        const fullSpins = 6 + Math.floor(Math.random() * 3); // 6-8 full rotations
+        // current rotation might be anything; compute final so we land at targetBase + fullSpins*2PI from current
+        const current = rotation % (Math.PI * 2);
+        let delta = (targetBase - current) % (Math.PI * 2);
+        if (delta <= 0) delta += Math.PI * 2;
+        const finalRotation = rotation + delta + fullSpins * Math.PI * 2;
+
+        const duration = 5500;
+        const startTime = performance.now();
+        const startRotation = rotation;
+
+        function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+
+        function frame(now) {
+            const elapsed = now - startTime;
+            const t = Math.min(1, elapsed / duration);
+            rotation = startRotation + (finalRotation - startRotation) * easeOutQuart(t);
+            drawWheel();
+            if (t < 1) {
+                requestAnimationFrame(frame);
+            } else {
+                spinning = false;
+                const winner = activeEntries[winnerIdx];
+                winners.push(winner.name);
+                activeEntries.splice(winnerIdx, 1);
+                winnerName.textContent = winner.name;
+                winnerBanner.classList.add('show');
+                drawWheel();
+                setUI();
+            }
+        }
+        requestAnimationFrame(frame);
+    }
+
+    async function loadEntries() {
+        errorState.style.display = 'none';
+        stats.textContent = 'Loading entries...';
+
+        if (SCRIPT_URL === '__SCRIPT_URL__') {
+            errorState.textContent = 'Wheel not configured yet. (Apps Script URL missing.)';
+            errorState.style.display = 'block';
+            stats.textContent = '';
+            return;
+        }
+
+        try {
+            const res = await fetch(SCRIPT_URL + '?action=list');
+            const json = await res.json();
+            if (!json.ok) throw new Error(json.error || 'Server error');
+            allEntries = json.entries || [];
+            // preserve already-drawn winners across refreshes
+            const winnerSet = new Set(winners);
+            activeEntries = allEntries.filter(e => !winnerSet.has(e.name));
+            drawWheel();
+            setUI();
+        } catch (err) {
+            errorState.textContent = 'Could not load entries: ' + err.message;
+            errorState.style.display = 'block';
+            stats.textContent = '';
+        }
+    }
+
+    function resetWheel() {
+        if (!confirm('Reset the wheel? All drawn winners will go back into the pool.')) return;
+        winners = [];
+        activeEntries = allEntries.slice();
+        winnerBanner.classList.remove('show');
+        drawWheel();
+        setUI();
+    }
+
+    spinBtn.addEventListener('click', spin);
+    refreshBtn.addEventListener('click', loadEntries);
+    resetBtn.addEventListener('click', resetWheel);
+
+    loadEntries();
+</script>
+
+</body>
+</html>

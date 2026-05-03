@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metabolic Reset Project</title>
+    <title>Metabolic Momentum</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,7 +14,7 @@
             margin: 0;
         }
         .container {
-            max-width: 400px;
+            max-width: 440px;
             margin: 0 auto;
             background: #fff;
             padding: 30px 20px;
@@ -23,20 +23,40 @@
         }
         h1 {
             color: #d35400;
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 5px;
+            letter-spacing: 0.5px;
         }
         p.subtitle {
             font-size: 14px;
             color: #666;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-style: italic;
+        }
+        .qr-wrap {
+            margin: 15px auto 5px;
+            width: 170px;
+            height: 170px;
+            padding: 8px;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+        }
+        .qr-wrap img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .qr-caption {
+            font-size: 12px;
+            color: #555;
+            margin: 0 0 25px;
         }
         .link-btn {
             display: block;
             width: 100%;
             padding: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             background-color: #2c3e50;
             color: #fff;
             text-decoration: none;
@@ -44,24 +64,19 @@
             border-radius: 8px;
             transition: background 0.3s ease;
             box-sizing: border-box;
+            font-size: 15px;
         }
         .link-btn:hover {
             background-color: #1a252f;
         }
-        .qr-placeholder {
-            margin: 20px auto;
-            width: 150px;
-            height: 150px;
-            background-color: #eaeaea;
-            border: 2px dashed #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 12px;
+        .link-btn.primary {
+            background-color: #d35400;
+        }
+        .link-btn.primary:hover {
+            background-color: #a8430a;
         }
         .footer-note {
-            margin-top: 30px;
+            margin-top: 25px;
             font-size: 12px;
             color: #999;
         }
@@ -70,23 +85,23 @@
 <body>
 
     <div class="container">
-        <h1>Welcome to the Metabolic Reset</h1>
+        <h1>Metabolic Momentum</h1>
         <p class="subtitle">Built for wherever you're at—curious, serious, or just exploring.</p>
 
-        <div class="qr-placeholder">
-            [Insert Page QR Code Here]
+        <div class="qr-wrap">
+            <img src="qr.png" alt="Scan to share this hub">
         </div>
-        <p style="font-size: 12px; color: #555;">Scan to share this hub with a friend!</p>
+        <p class="qr-caption">Scan to share this hub with a friend!</p>
 
-        <a href="#quiz" class="link-btn">🧠 Take the Metabolic Quiz</a>
+        <a href="https://28dayreset.com/quiz?ref=MEL7591" class="link-btn" target="_blank" rel="noopener">🧠 Take the Metabolic Quiz</a>
 
-        <a href="#recipes" class="link-btn">🥗 Download Recipes & Roadmap PDFs</a>
+        <a href="#recipes" class="link-btn">🥗 Download Recipes &amp; Roadmap PDFs</a>
 
-        <a href="#raffle" class="link-btn">🎟️ Enter Tonight's Raffle</a>
+        <a href="raffle.html" class="link-btn primary">🎟️ Enter Tonight's Raffle</a>
 
         <a href="#protocol" class="link-btn">🔥 Explore the Protocol (Interest Form)</a>
 
-        <a href="#community" class="link-btn">🤝 Join the Community & Newsletter</a>
+        <a href="#community" class="link-btn">🤝 Join the Community &amp; Newsletter</a>
 
         <div class="footer-note">
             <p>You don't have to do this alone anymore.</p>

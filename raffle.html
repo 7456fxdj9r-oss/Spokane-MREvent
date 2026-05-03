@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter the Raffle — Metabolic Momentum</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 28px 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #d35400;
+            font-size: 24px;
+            margin: 0 0 5px;
+            text-align: center;
+        }
+        p.lede {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin: 0 0 25px;
+            font-style: italic;
+        }
+        .section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin: 20px 0 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 12px 0 5px;
+            color: #333;
+        }
+        label .req { color: #d35400; }
+        input[type=text],
+        input[type=email],
+        input[type=tel],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+            background: #fff;
+        }
+        textarea { min-height: 70px; resize: vertical; }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #d35400;
+            box-shadow: 0 0 0 2px rgba(211,84,0,0.15);
+        }
+        .scale {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .scale label {
+            flex: 1;
+            margin: 0;
+            text-align: center;
+            padding: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            background: #fafafa;
+            transition: all 0.15s;
+        }
+        .scale input { display: none; }
+        .scale input:checked + span {
+            background: #d35400;
+            color: #fff;
+            border-color: #d35400;
+        }
+        .scale label span {
+            display: block;
+            margin: -10px 0;
+            padding: 10px 0;
+            border-radius: 6px;
+        }
+        .radio-row {
+            margin-top: 6px;
+        }
+        .radio-row label {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            margin: 4px 12px 4px 0;
+            cursor: pointer;
+        }
+        .radio-row input { margin-right: 6px; }
+        .checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            margin: 18px 0 8px;
+            gap: 8px;
+        }
+        .checkbox-row input { margin-top: 3px; }
+        .checkbox-row label {
+            margin: 0;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        button.submit {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background: #d35400;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button.submit:hover:not(:disabled) { background: #a8430a; }
+        button.submit:disabled { background: #999; cursor: not-allowed; }
+        .status {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            min-height: 20px;
+        }
+        .status.error { color: #c0392b; }
+        .status.success { color: #27ae60; font-weight: bold; }
+        .success-card {
+            text-align: center;
+            padding: 30px 10px;
+        }
+        .success-card h2 {
+            color: #27ae60;
+            margin: 0 0 10px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="formCard">
+    <h1>🎟️ Tonight's Raffle</h1>
+    <p class="lede">Enter to win — and tell us a little about where you're at.</p>
+
+    <form id="raffleForm" novalidate>
+        <div class="section-title">Your Info</div>
+
+        <label for="name">Full Name <span class="req">*</span></label>
+        <input id="name" name="name" type="text" required autocomplete="name">
+
+        <label for="email">Email <span class="req">*</span></label>
+        <input id="email" name="email" type="email" required autocomplete="email">
+
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel">
+
+        <label for="invitedBy">Who invited you tonight? <span class="req">*</span></label>
+        <input id="invitedBy" name="invitedBy" type="text" required>
+
+        <div class="section-title">A Few Quick Questions</div>
+
+        <label>What brought you here tonight? <span class="req">*</span></label>
+        <div class="radio-row">
+            <label><input type="radio" name="whatBrought" value="Weight" required>Weight</label>
+            <label><input type="radio" name="whatBrought" value="Energy">Energy</label>
+            <label><input type="radio" name="whatBrought" value="Sleep">Sleep</label>
+            <label><input type="radio" name="whatBrought" value="Blood Sugar">Blood Sugar</label>
+            <label><input type="radio" name="whatBrought" value="Just Curious">Just Curious</label>
+            <label><input type="radio" name="whatBrought" value="Other">Other</label>
+        </div>
+
+        <label>Daily energy (1 = drained, 5 = great)</label>
+        <div class="scale">
+            <label><input type="radio" name="energy" value="1"><span>1</span></label>
+            <label><input type="radio" name="energy" value="2"><span>2</span></label>
+            <label><input type="radio" name="energy" value="3"><span>3</span></label>
+            <label><input type="radio" name="energy" value="4"><span>4</span></label>
+            <label><input type="radio" name="energy" value="5"><span>5</span></label>
+        </div>
+
+        <label>Sleep quality (1 = poor, 5 = excellent)</label>
+        <div class="scale">
+            <label><input type="radio" name="sleep" value="1"><span>1</span></label>
+            <label><input type="radio" name="sleep" value="2"><span>2</span></label>
+            <label><input type="radio" name="sleep" value="3"><span>3</span></label>
+            <label><input type="radio" name="sleep" value="4"><span>4</span></label>
+            <label><input type="radio" name="sleep" value="5"><span>5</span></label>
+        </div>
+
+        <label>Tried a reset / cleanse / diet program before?</label>
+        <div class="radio-row">
+            <label><input type="radio" name="triedBefore" value="Yes">Yes</label>
+            <label><input type="radio" name="triedBefore" value="No">No</label>
+        </div>
+
+        <label for="frustration">Biggest health frustration right now? (optional)</label>
+        <textarea id="frustration" name="frustration"></textarea>
+
+        <div class="checkbox-row">
+            <input id="newsletter" name="newsletter" type="checkbox" checked>
+            <label for="newsletter">Add me to the Metabolic Momentum newsletter</label>
+        </div>
+
+        <button class="submit" type="submit" id="submitBtn">Enter the Raffle</button>
+        <div class="status" id="status"></div>
+    </form>
+</div>
+
+<div class="container" id="successCard" style="display:none;">
+    <div class="success-card">
+        <h2>You're in! 🎉</h2>
+        <p>Good luck tonight — winners will be drawn from the wheel.</p>
+        <a href="index.html" class="back-link">← Back to the hub</a>
+    </div>
+</div>
+
+<script>
+    // Apps Script web app URL — paste the deployment URL here after deploying Code.gs.
+    const SCRIPT_URL = '__SCRIPT_URL__';
+
+    const form = document.getElementById('raffleForm');
+    const statusEl = document.getElementById('status');
+    const submitBtn = document.getElementById('submitBtn');
+    const formCard = document.getElementById('formCard');
+    const successCard = document.getElementById('successCard');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        statusEl.className = 'status';
+        statusEl.textContent = '';
+
+        const data = {
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            phone: form.phone.value.trim(),
+            invitedBy: form.invitedBy.value.trim(),
+            whatBrought: (form.querySelector('input[name=whatBrought]:checked') || {}).value || '',
+            energy: (form.querySelector('input[name=energy]:checked') || {}).value || '',
+            sleep: (form.querySelector('input[name=sleep]:checked') || {}).value || '',
+            triedBefore: (form.querySelector('input[name=triedBefore]:checked') || {}).value || '',
+            frustration: form.frustration.value.trim(),
+            newsletter: form.newsletter.checked
+        };
+
+        if (!data.name || !data.email || !data.invitedBy || !data.whatBrought) {
+            statusEl.className = 'status error';
+            statusEl.textContent = 'Please fill in the required fields.';
+            return;
+        }
+
+        if (SCRIPT_URL === '__SCRIPT_URL__') {
+            statusEl.className = 'status error';
+            statusEl.textContent = 'Form not configured yet. (Apps Script URL missing.)';
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Entering...';
+
+        try {
+            // text/plain body avoids CORS preflight on Apps Script web apps
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+            const json = await res.json();
+            if (!json.ok) throw new Error(json.error || 'Server error');
+            formCard.style.display = 'none';
+            successCard.style.display = 'block';
+        } catch (err) {
+            statusEl.className = 'status error';
+            statusEl.textContent = 'Could not submit — please try again or grab a host. (' + err.message + ')';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Enter the Raffle';
+        }
+    });
+</script>
+
+</body>
+</html>
