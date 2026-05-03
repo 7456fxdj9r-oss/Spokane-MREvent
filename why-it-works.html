@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why It Works — Metabolic Momentum</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon-32.png" sizes="32x32">
+    <meta name="theme-color" content="#1a252f">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            background: #1a252f;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            padding: 20px 14px 40px;
+            line-height: 1.5;
+        }
+        .wrap { max-width: 540px; margin: 0 auto; }
+
+        .top {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f39c12;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        h1 {
+            color: #fff;
+            font-size: 30px;
+            margin: 0 0 8px;
+            letter-spacing: 0.5px;
+            line-height: 1.15;
+        }
+        .lede {
+            font-size: 15px;
+            color: #bdc3c7;
+            font-style: italic;
+        }
+
+        /* Big hook stat at top */
+        .hook {
+            background: rgba(243, 156, 18, 0.10);
+            border: 1px solid rgba(243, 156, 18, 0.35);
+            border-radius: 14px;
+            padding: 26px 18px;
+            text-align: center;
+            margin: 18px 0 28px;
+        }
+        .hook .big-num {
+            display: block;
+            color: #f39c12;
+            font-weight: 800;
+            font-size: 56px;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .hook .big-label {
+            display: block;
+            color: #ecf0f1;
+            font-size: 16px;
+            margin-top: 12px;
+            line-height: 1.4;
+        }
+        .hook .big-label strong { color: #f39c12; }
+
+        /* Section blocks */
+        section.block {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 18px;
+            margin: 16px 0;
+        }
+        section.block h2 {
+            color: #f39c12;
+            font-size: 20px;
+            margin: 0 0 12px;
+        }
+        section.block h3 {
+            color: #ecf0f1;
+            font-size: 15px;
+            margin: 14px 0 6px;
+            font-weight: 700;
+        }
+        section.block p {
+            color: #ecf0f1;
+            font-size: 15px;
+            margin: 8px 0;
+        }
+        section.block ul {
+            margin: 8px 0 8px 20px;
+            color: #ecf0f1;
+            font-size: 14px;
+        }
+        section.block ul li { margin: 4px 0; }
+        section.block strong { color: #f39c12; }
+        section.block em { color: #bdc3c7; }
+
+        /* Pull quote */
+        .pull-quote {
+            border-left: 3px solid #f39c12;
+            background: rgba(243, 156, 18, 0.08);
+            padding: 12px 14px;
+            margin: 14px 0;
+            font-size: 15px;
+            color: #ecf0f1;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Three-face grid */
+        .three-faces {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .face {
+            background: rgba(0,0,0,0.2);
+            padding: 10px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .face .icon {
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .face strong { display: block; color: #f39c12; font-size: 14px; margin-bottom: 2px; }
+        .face span.body { color: #ecf0f1; font-size: 13px; line-height: 1.4; }
+
+        /* Stats row (Arterburn) */
+        .stat-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .stat-row .stat {
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 10px 6px;
+            text-align: center;
+        }
+        .stat-row .stat .num {
+            display: block;
+            color: #f39c12;
+            font-weight: 800;
+            font-size: 22px;
+            line-height: 1.1;
+        }
+        .stat-row .stat .label {
+            display: block;
+            color: #bdc3c7;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+
+        /* Results compare */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .compare .col {
+            background: rgba(0,0,0,0.2);
+            padding: 12px 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .compare .col .name {
+            color: #f39c12;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .compare .col .stat {
+            color: #ecf0f1;
+            font-size: 13px;
+            margin: 3px 0;
+        }
+        .compare .col .stat strong { color: #fff; font-size: 15px; }
+
+        /* Citations */
+        .citation {
+            color: #95a5a6;
+            font-size: 11px;
+            font-style: italic;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        /* CTAs */
+        .footer-cta {
+            display: grid;
+            gap: 10px;
+            margin-top: 26px;
+        }
+        .footer-cta a {
+            display: block;
+            padding: 14px;
+            background: #d35400;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .footer-cta a.secondary {
+            background: transparent;
+            color: #ecf0f1;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+    <div class="top">
+        <div class="eyebrow">The Science</div>
+        <h1>Why It Works</h1>
+        <p class="lede">Most adults are metabolically broken — and most don't know it. Here's what the data says.</p>
+    </div>
+
+    <div class="hook">
+        <span class="big-num">12.2%</span>
+        <span class="big-label">of American adults are <strong>metabolically healthy</strong>.<br>The other 7 out of 8 are somewhere on a spectrum of dysfunction.</span>
+    </div>
+
+    <section class="block">
+        <h2>Three Faces, One Problem</h2>
+        <p>Diabetes, high blood pressure, high cholesterol — these aren't three different diseases. They're three windows looking into the same room.</p>
+        <p>The room is <strong>insulin resistance</strong> — cells that have stopped responding to insulin properly. It's the engine driving most chronic disease in adults today.</p>
+        <div class="three-faces">
+            <div class="face"><span class="icon">🩸</span><span><strong>Diabetes / pre-diabetes</strong><span class="body">Insulin resistance → blood sugar rises → A1c climbs</span></span></div>
+            <div class="face"><span class="icon">💢</span><span><strong>High blood pressure</strong><span class="body">Insulin resistance → sodium retention + vessel stiffening → BP rises</span></span></div>
+            <div class="face"><span class="icon">🩺</span><span><strong>High cholesterol</strong><span class="body">Insulin resistance → triglycerides up, HDL down, LDL shifts to small dense particles (the kind that actually predicts heart disease)</span></span></div>
+        </div>
+        <p class="pull-quote">When someone tells me they have diabetes <em>and</em> high blood pressure <em>and</em> high cholesterol, I don't think "three problems." I think "one problem with three faces."</p>
+    </section>
+
+    <section class="block">
+        <h2>What "Metabolically Healthy" Actually Means</h2>
+        <p>You need <strong>all five</strong> of these in the optimal range — and not be on medication for any of them:</p>
+        <ul>
+            <li>Waist &lt; 40 in (men) · &lt; 35 in (women)</li>
+            <li>Fasting glucose &lt; 100 · A1c &lt; 5.7%</li>
+            <li>Blood pressure &lt; 120 / 80</li>
+            <li>Triglycerides &lt; 150</li>
+            <li>HDL ≥ 40 (men) · ≥ 50 (women)</li>
+        </ul>
+        <p>Miss <em>any one</em>, and you're not metabolically healthy by this definition. <strong>Only 1 in 200 adults with obesity</strong> meets all five.</p>
+        <p class="citation">Araújo J, Cai J, Stevens J. Prevalence of Optimal Metabolic Health in American Adults: NHANES 2009–2016. Metabolic Syndrome and Related Disorders, 2019;17(1):46–52.</p>
+    </section>
+
+    <section class="block">
+        <h2>What the Data Says Works</h2>
+        <p><strong>The Arterburn 2019 randomized controlled trial</strong> compared two structured meal-replacement programs to a self-directed reduced-calorie diet. 198 adults. 16 weeks.</p>
+
+        <div class="stat-row">
+            <div class="stat"><span class="num">−5.7%</span><span class="label">OPTAVIA<br>(coached)</span></div>
+            <div class="stat"><span class="num">−5.0%</span><span class="label">Medifast<br>(self-guided)</span></div>
+            <div class="stat"><span class="num">−0.2%</span><span class="label">Self-directed<br>diet</span></div>
+        </div>
+        <p style="margin-top:10px;font-size:14px;">Both programs: <strong>~25× more weight loss</strong> than self-directed, in the same 16 weeks.</p>
+
+        <h3>The Coaching Effect</h3>
+        <p>Inside the OPTAVIA arm, people who completed <strong>17 or more</strong> coaching calls lost <strong>2.3× more weight</strong> (6.9 kg) than those who completed fewer (3.1 kg).</p>
+        <p class="pull-quote">Support isn't a "nice to have." In this trial, it was the single biggest predictor of who lost weight and who didn't.</p>
+        <p class="citation">Arterburn LM et al. Randomized controlled trial assessing two commercial weight loss programs in adults with overweight or obesity. Obesity Science &amp; Practice, 2019;5(1):3–14.</p>
+    </section>
+
+    <section class="block">
+        <h2>What We're Seeing — Right Here</h2>
+        <p>The trial measured 16 weeks. Real life isn't 16 weeks. Here's what 8 months on the same kind of structured protocol looks like in two people you can meet tonight:</p>
+
+        <div class="compare">
+            <div class="col">
+                <div class="name">Cearra</div>
+                <div class="stat"><strong>−45 lb</strong><br>weight</div>
+                <div class="stat"><strong>52% → 40.6%</strong><br>body fat</div>
+                <div class="stat"><strong>+1.2 lb</strong><br>lean mass</div>
+            </div>
+            <div class="col">
+                <div class="name">Kolby</div>
+                <div class="stat"><strong>−95 lb</strong><br>weight</div>
+                <div class="stat"><strong>44.6% → 27.8%</strong><br>body fat</div>
+                <div class="stat"><strong>117.8 → 119</strong><br>skeletal muscle</div>
+            </div>
+        </div>
+
+        <p>Cearra didn't just lose weight — she lost the right kind of weight. Lean mass is <em>up</em>, not down.</p>
+        <p>Kolby cut his body fat almost in half. Skeletal muscle is climbing. The metabolic engine is rebuilding.</p>
+        <p class="pull-quote"><strong>5 to 10% weight loss</strong> is enough to move every metabolic marker — blood sugar, BP, triglycerides, HDL — in the right direction. Cearra and Kolby are well past that.</p>
+    </section>
+
+    <section class="block">
+        <h2>The Bottom Line</h2>
+        <p>If only 1 in 8 American adults is metabolically healthy, then your raised hand a few minutes ago — that wasn't a quirk of this room. That's the country.</p>
+        <p>The body that got you into this can get you out. <strong>5 to 10% weight loss is enough</strong> to move every marker in the right direction. The data says it works. The room can show you it works. The piece nobody wants to hear and everybody needs to hear: <strong>support and accountability matter as much as the protocol</strong>.</p>
+        <p>That's why this room exists.</p>
+    </section>
+
+    <div class="footer-cta">
+        <a href="raffle.html">🎟️ Enter the Raffle</a>
+        <a href="kolby.html" class="secondary">📊 See Kolby's transformation</a>
+        <a href="cearra.html" class="secondary">📊 See Cearra's transformation</a>
+        <a href="index.html" class="secondary">← Back to the hub</a>
+    </div>
+
+</div>
+</body>
+</html>

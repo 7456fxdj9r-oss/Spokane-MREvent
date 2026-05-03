@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolby's Story — Metabolic Momentum</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon-32.png" sizes="32x32">
+    <meta name="theme-color" content="#1a252f">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            background: #1a252f;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            padding: 20px 14px 40px;
+            line-height: 1.45;
+        }
+        .wrap { max-width: 540px; margin: 0 auto; }
+
+        .top {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f39c12;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        h1 {
+            color: #fff;
+            font-size: 30px;
+            margin: 0 0 4px;
+            letter-spacing: 0.5px;
+        }
+        .lede {
+            font-size: 15px;
+            color: #bdc3c7;
+            font-style: italic;
+        }
+
+        .photos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 18px 0;
+        }
+        .photos img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            background: #000;
+        }
+
+        .headline-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 18px 0 24px;
+        }
+        .h-stat {
+            background: rgba(243, 156, 18, 0.08);
+            border: 1px solid rgba(243, 156, 18, 0.35);
+            border-radius: 10px;
+            padding: 12px 6px;
+            text-align: center;
+        }
+        .h-stat .num {
+            display: block;
+            color: #f39c12;
+            font-weight: 800;
+            font-size: 22px;
+            line-height: 1.1;
+        }
+        .h-stat .label {
+            display: block;
+            color: #ecf0f1;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-top: 6px;
+            line-height: 1.25;
+        }
+
+        .chart-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 14px 10px 10px;
+            margin: 14px 0;
+        }
+        .chart-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 0 6px 8px;
+        }
+        .chart-head h3 {
+            color: #ecf0f1;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .chart-head .delta {
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .chart-head .delta.neg { color: #2ecc71; }
+        .chart-head .delta.pos { color: #e74c3c; }
+        .chart-head .delta.flat { color: #95a5a6; }
+        svg.chart {
+            width: 100%;
+            height: 220px;
+            display: block;
+        }
+        .chart-foot {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 6px 0;
+            font-size: 11px;
+            color: #95a5a6;
+        }
+
+        .takeaway {
+            background: rgba(243, 156, 18, 0.10);
+            border-left: 3px solid #f39c12;
+            padding: 14px 16px;
+            margin: 24px 0 18px;
+            border-radius: 0 8px 8px 0;
+            font-size: 15px;
+            color: #ecf0f1;
+        }
+        .takeaway strong { color: #f39c12; }
+
+        .footer-cta {
+            display: grid;
+            gap: 10px;
+            margin-top: 26px;
+        }
+        .footer-cta a {
+            display: block;
+            padding: 14px;
+            background: #d35400;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .footer-cta a.secondary {
+            background: transparent;
+            color: #ecf0f1;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+    <div class="top">
+        <div class="eyebrow">Real Person · Real Numbers</div>
+        <h1>Kolby's Story</h1>
+        <p class="lede">8 months. 95 pounds. Body fat almost halved.</p>
+    </div>
+
+    <div class="photos">
+        <img src="slides/kolby-front.jpg" alt="Kolby — front, day one">
+        <img src="slides/kolby-side.jpg" alt="Kolby — side, day one">
+    </div>
+
+    <div class="headline-stats">
+        <div class="h-stat">
+            <span class="num">−95 lb</span>
+            <span class="label">Total<br>weight loss</span>
+        </div>
+        <div class="h-stat">
+            <span class="num">−16.8</span>
+            <span class="label">Body Fat<br>% points</span>
+        </div>
+        <div class="h-stat">
+            <span class="num">8 mo</span>
+            <span class="label">Time<br>elapsed</span>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-head">
+            <h3>Weight</h3>
+            <span class="delta neg">350 → 254.8 lb</span>
+        </div>
+        <svg class="chart" id="weightChart" preserveAspectRatio="none"></svg>
+        <div class="chart-foot">
+            <span>8/2025</span>
+            <span>4/2026</span>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-head">
+            <h3>Body Fat</h3>
+            <span class="delta neg">44.6% → 27.8%</span>
+        </div>
+        <svg class="chart" id="bfChart" preserveAspectRatio="none"></svg>
+        <div class="chart-foot">
+            <span>8/2025</span>
+            <span>4/2026</span>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-head">
+            <h3>Muscle Mass</h3>
+            <span class="delta flat">182 → 174.6 lb</span>
+        </div>
+        <svg class="chart" id="mmChart" preserveAspectRatio="none"></svg>
+        <div class="chart-foot">
+            <span>8/2025</span>
+            <span>4/2026</span>
+        </div>
+    </div>
+
+    <p class="takeaway">
+        <strong>95 pounds down. Body fat almost halved.</strong> A small amount of muscle came off too — what you'd expect from a body shedding this much weight — and the latest readings show muscle climbing again. Skeletal muscle measurements have moved from <strong>117.8 lb to 119 lb</strong> in the last six weeks. The recomposition is just getting started.
+    </p>
+
+    <div class="footer-cta">
+        <a href="raffle.html">🎟️ Enter the Raffle</a>
+        <a href="index.html" class="secondary">← Back to the hub</a>
+    </div>
+
+</div>
+
+<script>
+    // ----- Kolby's data -----
+    var weightData = [
+        ['8/9/2025', 350],
+        ['8/23/2025', 323],
+        ['8/25/2025', 319],
+        ['9/1/2025', 312],
+        ['9/8/2025', 304],
+        ['9/15/2025', 298.2],
+        ['9/22/2025', 291.1],
+        ['9/29/2025', 282.6],
+        ['10/6/2025', 278.2],
+        ['10/13/2025', 273.4],
+        ['10/20/2025', 270.6],
+        ['10/27/2025', 266.4],
+        ['11/10/2025', 258.6],
+        ['11/24/2025', 254.2],
+        ['12/1/2025', 251.8],
+        ['12/8/2025', 248.4],
+        ['12/15/2025', 246.6],
+        ['12/29/2025', 247.2],
+        ['1/5/2026', 248],
+        ['1/12/2026', 246.2],
+        ['1/26/2026', 248],
+        ['2/16/2026', 249.8],
+        ['3/9/2026', 248],
+        ['3/23/2026', 248],
+        ['3/30/2026', 260],
+        ['4/6/2026', 256],
+        ['4/13/2026', 255],
+        ['4/20/2026', 254.8]
+    ];
+
+    var bfData = [
+        ['8/9/2025', 44.6],
+        ['8/25/2025', 39.9],
+        ['9/8/2025', 37.1],
+        ['9/22/2025', 34.6],
+        ['10/6/2025', 32.2],
+        ['10/13/2025', 31.2],
+        ['10/20/2025', 30.7],
+        ['10/27/2025', 29.9],
+        ['11/10/2025', 28.5],
+        ['11/24/2025', 27.7],
+        ['12/1/2025', 27.2],
+        ['12/8/2025', 26.6],
+        ['12/15/2025', 26.3],
+        ['12/29/2025', 26.4],
+        ['1/12/2026', 26.2],
+        ['1/26/2026', 26.7],
+        ['2/16/2026', 26.9],
+        ['3/9/2026', 26.5],
+        ['4/13/2026', 27.9],
+        ['4/20/2026', 27.8]
+    ];
+
+    var mmData = [
+        ['8/25/2025', 182],
+        ['9/8/2025', 182.6],
+        ['9/22/2025', 181],
+        ['10/6/2025', 179.4],
+        ['10/13/2025', 178.8],
+        ['10/20/2025', 178.2],
+        ['10/27/2025', 177.2],
+        ['11/10/2025', 175.8],
+        ['11/24/2025', 174.8],
+        ['12/1/2025', 174],
+        ['12/8/2025', 173],
+        ['12/15/2025', 173],
+        ['12/29/2025', 172.8],
+        ['1/12/2026', 172.6],
+        ['1/26/2026', 174.2],
+        ['2/16/2026', 173.6],
+        ['3/9/2026', 173.2],
+        ['4/13/2026', 174.6]
+    ];
+
+    // ----- Chart rendering (same engine as cearra.html) -----
+    var NS = 'http://www.w3.org/2000/svg';
+
+    function el(name, attrs) {
+        var n = document.createElementNS(NS, name);
+        for (var k in attrs) n.setAttribute(k, attrs[k]);
+        return n;
+    }
+
+    function drawChart(svgId, data, opts) {
+        var svg = document.getElementById(svgId);
+        var W = svg.clientWidth || 320;
+        var H = 220;
+        var pad = { top: 22, right: 14, bottom: 14, left: 36 };
+        var iw = W - pad.left - pad.right;
+        var ih = H - pad.top - pad.bottom;
+
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        var pts = data.map(function (d) {
+            return { t: new Date(d[0]).getTime(), v: d[1] };
+        });
+        var ts = pts.map(function (p) { return p.t; });
+        var vs = pts.map(function (p) { return p.v; });
+        var tMin = Math.min.apply(null, ts);
+        var tMax = Math.max.apply(null, ts);
+        var vMin = opts.yMin !== undefined ? opts.yMin : Math.min.apply(null, vs) - opts.padY;
+        var vMax = opts.yMax !== undefined ? opts.yMax : Math.max.apply(null, vs) + opts.padY;
+
+        function x(t) { return pad.left + ((t - tMin) / (tMax - tMin)) * iw; }
+        function y(v) { return pad.top + (1 - (v - vMin) / (vMax - vMin)) * ih; }
+
+        for (var i = 0; i <= 2; i++) {
+            var gv = vMin + (vMax - vMin) * (i / 2);
+            var gy = y(gv);
+            svg.appendChild(el('line', {
+                x1: pad.left, x2: W - pad.right,
+                y1: gy, y2: gy,
+                stroke: 'rgba(255,255,255,0.08)',
+                'stroke-width': '1'
+            }));
+            svg.appendChild(el('text', {
+                x: pad.left - 5, y: gy + 3,
+                fill: 'rgba(255,255,255,0.4)',
+                'font-size': '10', 'text-anchor': 'end'
+            })).textContent = (opts.fmt ? opts.fmt(gv) : Math.round(gv));
+        }
+
+        var gradId = svgId + '-grad';
+        var defs = el('defs', {});
+        var grad = el('linearGradient', { id: gradId, x1: '0', x2: '0', y1: '0', y2: '1' });
+        grad.appendChild(el('stop', { offset: '0%', 'stop-color': '#f39c12', 'stop-opacity': '0.45' }));
+        grad.appendChild(el('stop', { offset: '100%', 'stop-color': '#f39c12', 'stop-opacity': '0' }));
+        defs.appendChild(grad);
+        svg.appendChild(defs);
+
+        var lineD = pts.map(function (p, i) {
+            return (i === 0 ? 'M ' : 'L ') + x(p.t) + ' ' + y(p.v);
+        }).join(' ');
+        var fillD = lineD + ' L ' + x(pts[pts.length - 1].t) + ' ' + (pad.top + ih) +
+                    ' L ' + x(pts[0].t) + ' ' + (pad.top + ih) + ' Z';
+
+        svg.appendChild(el('path', {
+            d: fillD,
+            fill: 'url(#' + gradId + ')'
+        }));
+        svg.appendChild(el('path', {
+            d: lineD,
+            fill: 'none',
+            stroke: '#f39c12',
+            'stroke-width': '2.5',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round'
+        }));
+
+        pts.forEach(function (p) {
+            svg.appendChild(el('circle', {
+                cx: x(p.t), cy: y(p.v), r: 2.5,
+                fill: '#f39c12'
+            }));
+        });
+
+        var first = pts[0];
+        var last = pts[pts.length - 1];
+        svg.appendChild(el('circle', {
+            cx: x(first.t), cy: y(first.v), r: 5,
+            fill: '#f39c12', stroke: '#1a252f', 'stroke-width': '2'
+        }));
+        svg.appendChild(el('circle', {
+            cx: x(last.t), cy: y(last.v), r: 5,
+            fill: '#f39c12', stroke: '#1a252f', 'stroke-width': '2'
+        }));
+
+        var startLabel = el('text', {
+            x: x(first.t) + 8, y: y(first.v) - 8,
+            fill: '#f39c12', 'font-size': '12', 'font-weight': '700',
+            'text-anchor': 'start'
+        });
+        startLabel.textContent = (opts.fmt ? opts.fmt(first.v) : first.v);
+        svg.appendChild(startLabel);
+
+        var endLabel = el('text', {
+            x: x(last.t) - 8, y: y(last.v) - 8,
+            fill: '#f39c12', 'font-size': '13', 'font-weight': '800',
+            'text-anchor': 'end'
+        });
+        endLabel.textContent = (opts.fmt ? opts.fmt(last.v) : last.v);
+        svg.appendChild(endLabel);
+    }
+
+    function render() {
+        drawChart('weightChart', weightData, { padY: 8, fmt: function (v) { return Math.round(v) + ' lb'; } });
+        drawChart('bfChart', bfData, { padY: 1.5, fmt: function (v) { return v.toFixed(1) + '%'; } });
+        drawChart('mmChart', mmData, { padY: 1, fmt: function (v) { return v.toFixed(1) + ' lb'; } });
+    }
+
+    render();
+    window.addEventListener('resize', render);
+</script>
+
+</body>
+</html>
