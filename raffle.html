@@ -119,21 +119,43 @@
             cursor: pointer;
         }
         .radio-row input { margin-right: 6px; }
-        .check-list label {
-            display: flex;
-            align-items: flex-start;
-            margin: 8px 0;
-            font-weight: 500;
-            cursor: pointer;
+        .yn-block {
+            margin: 10px 0;
             padding: 12px 14px;
             background: #fafafa;
             border: 1px solid #eee;
             border-radius: 8px;
-            transition: all 0.15s;
         }
-        .check-list label:hover { background: #f0f0f0; }
-        .check-list input { margin: 3px 10px 0 0; transform: scale(1.2); }
-        .check-list input:checked + span { color: #d35400; font-weight: 600; }
+        .yn-block .question {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 14px;
+            color: #333;
+        }
+        .yn-block .yn-options { display: flex; gap: 8px; }
+        .yn-block .yn-options label {
+            flex: 1;
+            margin: 0;
+            text-align: center;
+            padding: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            background: #fff;
+            transition: all 0.15s;
+            font-size: 14px;
+        }
+        .yn-block .yn-options input { display: none; }
+        .yn-block .yn-options input:checked + span {
+            background: #d35400;
+            color: #fff;
+            display: block;
+            margin: -10px 0;
+            padding: 10px 0;
+            border-radius: 6px;
+        }
         .checkbox-row {
             display: flex;
             align-items: flex-start;
@@ -248,15 +270,34 @@
 <!-- STEP 2: Optional intake -->
 <div class="container" id="stepTwo" style="display:none;">
     <div class="step-banner"><span class="check">✓</span> You're entered!</div>
-    <h2>Quick — tell us a bit more</h2>
-    <p class="lede">Optional. Helps Craig tailor what you'll hear tonight.</p>
+    <h2>A few quick questions</h2>
+    <p class="lede">Takes about 30 seconds. Helps Craig tailor tonight to the room.</p>
 
     <form id="step2Form" novalidate>
-        <div class="section-title">Raise your hand if…</div>
-        <div class="check-list">
-            <label><input type="checkbox" name="hasDiabetes"><span>I or someone close to me has <strong>diabetes</strong> or pre-diabetes</span></label>
-            <label><input type="checkbox" name="hasHighBP"><span>I or someone close to me has <strong>high blood pressure</strong></span></label>
-            <label><input type="checkbox" name="hasHighCholesterol"><span>I or someone close to me has <strong>high cholesterol</strong></span></label>
+        <div class="section-title">Do you or someone close to you have…</div>
+
+        <div class="yn-block">
+            <span class="question"><strong>Diabetes</strong> or pre-diabetes?</span>
+            <div class="yn-options">
+                <label><input type="radio" name="hasDiabetes" value="Yes"><span>Yes</span></label>
+                <label><input type="radio" name="hasDiabetes" value="No"><span>No</span></label>
+            </div>
+        </div>
+
+        <div class="yn-block">
+            <span class="question"><strong>High blood pressure</strong>?</span>
+            <div class="yn-options">
+                <label><input type="radio" name="hasHighBP" value="Yes"><span>Yes</span></label>
+                <label><input type="radio" name="hasHighBP" value="No"><span>No</span></label>
+            </div>
+        </div>
+
+        <div class="yn-block">
+            <span class="question"><strong>High cholesterol</strong>?</span>
+            <div class="yn-options">
+                <label><input type="radio" name="hasHighCholesterol" value="Yes"><span>Yes</span></label>
+                <label><input type="radio" name="hasHighCholesterol" value="No"><span>No</span></label>
+            </div>
         </div>
 
         <div class="section-title">Rate the areas you wish were better</div>
@@ -337,7 +378,6 @@
         <textarea id="frustration" name="frustration"></textarea>
 
         <button class="submit" type="submit" id="submit2Btn">Submit</button>
-        <button class="skip" type="button" id="skipBtn">Skip — I'm done</button>
         <div class="status" id="status2"></div>
     </form>
 </div>
@@ -364,7 +404,6 @@
     const status2   = document.getElementById('status2');
     const submit1Btn = document.getElementById('submit1Btn');
     const submit2Btn = document.getElementById('submit2Btn');
-    const skipBtn   = document.getElementById('skipBtn');
 
     let entryId = null;
 
@@ -411,18 +450,44 @@
     });
 
     // -------- STEP 2 --------
+    const REQUIRED_RADIOS = [
+        ['hasDiabetes', 'Diabetes question'],
+        ['hasHighBP', 'High blood pressure question'],
+        ['hasHighCholesterol', 'High cholesterol question'],
+        ['rateEnergy', 'Energy rating'],
+        ['rateSleep', 'Sleep rating'],
+        ['rateWeight', 'Weight rating'],
+        ['rateCravings', 'Cravings rating'],
+        ['rateMood', 'Mood / stress rating'],
+        ['rateDigestion', 'Digestion rating'],
+        ['rateCommunity', 'Community rating'],
+        ['triedBefore', 'Tried-before question']
+    ];
+
     step2Form.addEventListener('submit', async (e) => {
         e.preventDefault();
         status2.className = 'status';
         status2.textContent = '';
 
         const pickRadio = (n) => (step2Form.querySelector('input[name=' + n + ']:checked') || {}).value || '';
+
+        // Validate everything is answered
+        const missing = REQUIRED_RADIOS.filter(([n]) => !pickRadio(n));
+        if (missing.length) {
+            status2.className = 'status error';
+            status2.textContent = 'Please answer all questions (' + missing.length + ' left).';
+            // scroll to first missing question
+            const firstMissing = step2Form.querySelector('input[name=' + missing[0][0] + ']');
+            if (firstMissing) firstMissing.closest('.yn-block, .scale')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
         const data = {
             action: 'update',
             id: entryId,
-            hasDiabetes: step2Form.hasDiabetes.checked,
-            hasHighBP: step2Form.hasHighBP.checked,
-            hasHighCholesterol: step2Form.hasHighCholesterol.checked,
+            hasDiabetes: pickRadio('hasDiabetes'),
+            hasHighBP: pickRadio('hasHighBP'),
+            hasHighCholesterol: pickRadio('hasHighCholesterol'),
             rateEnergy: pickRadio('rateEnergy'),
             rateSleep: pickRadio('rateSleep'),
             rateWeight: pickRadio('rateWeight'),
@@ -453,13 +518,6 @@
             submit2Btn.disabled = false;
             submit2Btn.textContent = 'Submit';
         }
-    });
-
-    // -------- SKIP --------
-    skipBtn.addEventListener('click', () => {
-        stepTwo.style.display = 'none';
-        doneCard.style.display = 'block';
-        window.scrollTo(0, 0);
     });
 </script>
 
