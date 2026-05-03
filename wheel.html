@@ -362,9 +362,12 @@
         requestAnimationFrame(frame);
     }
 
-    async function loadEntries() {
-        errorState.style.display = 'none';
-        stats.textContent = 'Loading entries...';
+    async function loadEntries(opts) {
+        var silent = opts && opts.silent;
+        if (!silent) {
+            errorState.style.display = 'none';
+            stats.textContent = 'Loading entries...';
+        }
 
         if (SCRIPT_URL === '__SCRIPT_URL__') {
             errorState.textContent = 'Wheel not configured yet. (Apps Script URL missing.)';
@@ -383,12 +386,23 @@
             activeEntries = allEntries.filter(e => !winnerSet.has(e.name));
             drawWheel();
             setUI();
+            errorState.style.display = 'none';
         } catch (err) {
-            errorState.textContent = 'Could not load entries: ' + err.message;
-            errorState.style.display = 'block';
-            stats.textContent = '';
+            // Silent polls leave the existing UI alone on transient failures
+            if (!silent) {
+                errorState.textContent = 'Could not load entries: ' + err.message;
+                errorState.style.display = 'block';
+                stats.textContent = '';
+            }
         }
     }
+
+    // Background poll so the speaker can leave this tab open during the
+    // event and watch entries tick up live. Skipped while spinning so we
+    // don't yank the wheel out from under an in-flight draw.
+    setInterval(function () {
+        if (!spinning) loadEntries({ silent: true });
+    }, 10000);
 
     function resetWheel() {
         if (!confirm('Reset the wheel? All drawn winners will go back into the pool.')) return;
