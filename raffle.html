@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Enter the Raffle — Metabolic Momentum</title>
+    <title>Metabolic Momentum Raffle</title>
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="icon" href="favicon-32.png" sizes="32x32">
     <meta name="theme-color" content="#d35400">
@@ -45,6 +45,37 @@
             margin: 0 0 4px;
             text-align: center;
             line-height: 1.15;
+        }
+        .prize-header {
+            text-align: center;
+            margin: -6px 0 14px;
+        }
+        .prize-header img {
+            width: 60%;
+            max-width: 220px;
+            height: auto;
+            border-radius: 10px;
+            background: #000;
+            display: block;
+            margin: 0 auto 6px;
+        }
+        .prize-header .prize-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            background: #fef3e2;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 4px;
+        }
+        .prize-header .prize-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #444;
+            margin: 0;
         }
         h2 {
             color: var(--accent);
@@ -304,8 +335,14 @@
 <body>
 
 <div class="container" id="formCard">
-    <h1>🎟️ Tonight's Raffle</h1>
+    <h1>🎟️ Metabolic Momentum Raffle</h1>
     <p class="lede">Enter to win — and tell us a bit about where you're at.</p>
+
+    <div class="prize-header">
+        <img src="slides/renpho-scale.jpg" alt="RENPHO Smart Body Composition Scale">
+        <span class="prize-label">Tonight's Prize</span>
+        <p class="prize-name">RENPHO Smart Body Composition Scale</p>
+    </div>
 
     <form id="raffleForm" novalidate>
 

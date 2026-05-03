@@ -205,6 +205,61 @@
             margin-bottom: 4px;
         }
 
+        /* Raffle opener: scale + QR side by side */
+        .raffle-opener {
+            display: flex;
+            gap: 6vw;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 20px 0;
+        }
+        .raffle-opener .scale-side {
+            flex: 0 1 38vw;
+            text-align: center;
+        }
+        .raffle-opener .scale-side img {
+            max-width: 38vw;
+            max-height: 60vh;
+            height: auto;
+            border-radius: 14px;
+            background: #000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .raffle-opener .scale-side .prize-label {
+            display: inline-block;
+            font-size: clamp(13px, 1.3vw, 18px);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #d35400;
+            background: #fef3e2;
+            padding: 6px 14px;
+            border-radius: 14px;
+            margin: 16px 0 8px;
+        }
+        .raffle-opener .scale-side .prize-name {
+            font-size: clamp(18px, 2vw, 26px);
+            color: #2c3e50;
+            font-weight: 600;
+            margin: 0;
+        }
+        .raffle-opener .qr-side {
+            flex: 0 1 38vw;
+            text-align: center;
+        }
+        .raffle-opener .qr-side img {
+            width: min(50vh, 38vw);
+            height: auto;
+        }
+        .raffle-opener .qr-side .scan-cta {
+            font-size: clamp(20px, 2.4vw, 32px);
+            color: #d35400;
+            font-weight: 700;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
         /* Closing */
         .closing h1 { font-size: clamp(48px, 9vw, 120px); }
         .closing .tagline { color: #f39c12; }
@@ -257,13 +312,29 @@
 <body>
 
 <div id="stage">
-    <!-- 1. Title -->
-    <section class="slide active" data-step-count="1">
+    <!-- 1. Opening: Raffle QR + Scale (visible on TV when guests arrive) -->
+    <section class="slide qr-slide active" data-step-count="1">
+        <h1>Metabolic Momentum Raffle</h1>
+        <div class="raffle-opener">
+            <div class="scale-side">
+                <img src="slides/renpho-scale.jpg" alt="RENPHO Smart Body Composition Scale">
+                <span class="prize-label">Tonight's Prize</span>
+                <p class="prize-name">RENPHO Smart Body Composition Scale</p>
+            </div>
+            <div class="qr-side">
+                <img src="slides/qr-raffle.png" alt="Scan to enter the raffle">
+                <p class="scan-cta">📱 Scan to enter</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Title -->
+    <section class="slide" data-step-count="1">
         <h1>METABOLIC<br>MOMENTUM</h1>
         <p class="tagline">Built for wherever you're at — curious, serious, or just exploring.</p>
     </section>
 
-    <!-- 2. Raise your hand -->
+    <!-- 3. Raise your hand -->
     <section class="slide" data-step-count="4">
         <h2>Raise your hand if…</h2>
         <ul class="raise-list">
@@ -273,7 +344,7 @@
         </ul>
     </section>
 
-    <!-- 3. Scan to follow along -->
+    <!-- 4. Scan to follow along -->
     <section class="slide qr-slide" data-step-count="1">
         <h1>Follow Along</h1>
         <p class="qr-sub">Scan to keep Cearra &amp; Kolby's "before" on your phone</p>
@@ -281,7 +352,7 @@
         <p class="url">7456fxdj9r-oss.github.io/Spokane-MREvent/before.html</p>
     </section>
 
-    <!-- 4. Cearra — Day One -->
+    <!-- 5. Cearra — Day One -->
     <section class="slide" data-step-count="1">
         <h2>Cearra — Day One</h2>
         <p class="slide-date">8/2025</p>
@@ -299,7 +370,7 @@
         </div>
     </section>
 
-    <!-- 5. Cearra — Then & Now -->
+    <!-- 6. Cearra — Then & Now -->
     <section class="slide" data-step-count="1">
         <h2>Cearra — Then &amp; Now</h2>
         <div class="tn-grid">
@@ -322,7 +393,7 @@
         <p class="tn-takeaway"><strong>Body fat down 12 points.</strong> Lean mass and muscle <strong>fully preserved</strong> — that's what real fat loss looks like.</p>
     </section>
 
-    <!-- 6. Kolby — Day One -->
+    <!-- 7. Kolby — Day One -->
     <section class="slide" data-step-count="1">
         <h2>Kolby — Day One</h2>
         <p class="slide-date">8/2025</p>
@@ -340,7 +411,7 @@
         </div>
     </section>
 
-    <!-- 7. Kolby — Then & Now -->
+    <!-- 8. Kolby — Then & Now -->
     <section class="slide" data-step-count="1">
         <h2>Kolby — Then &amp; Now</h2>
         <div class="tn-grid">
@@ -363,13 +434,6 @@
         <p class="tn-takeaway"><strong>Body fat dropped 17.6 points.</strong> Skeletal muscle <strong>went up 2 lb</strong> — losing fat while gaining muscle is the holy grail.</p>
     </section>
 
-    <!-- 8. QR for raffle -->
-    <section class="slide qr-slide" data-step-count="1">
-        <h1>Enter the Raffle</h1>
-        <img class="qr-img" src="slides/qr-raffle.png" alt="Scan to enter the raffle">
-        <p class="url">7456fxdj9r-oss.github.io/Spokane-MREvent/raffle.html</p>
-    </section>
-
     <!-- 9. Closing -->
     <section class="slide closing" data-step-count="1">
         <h1>Let's Go.</h1>
@@ -377,7 +441,7 @@
     </section>
 </div>
 
-<div class="counter" id="counter">1 / 9</div>
+<div class="counter" id="counter">1 / 8</div>
 
 <div class="help">← → space · F = fullscreen · Esc</div>
 
