@@ -41,8 +41,18 @@ const HEADERS = [
 
 function doPost(e) {
   try {
-    const sheet = getSheet_();
     const data = JSON.parse(e.postData.contents || '{}');
+
+    // Admin: clear all entries (called from wheel.html "Clear all entries" button).
+    // The wheel URL is host-only by obscurity; the button itself double-confirms.
+    if (data.action === 'clear') {
+      const sheet = getSheet_();
+      const lastRow = sheet.getLastRow();
+      if (lastRow > 1) sheet.deleteRows(2, lastRow - 1);
+      return jsonResponse_({ ok: true, cleared: true });
+    }
+
+    const sheet = getSheet_();
 
     if (!data.name || !data.email) {
       return jsonResponse_({ ok: false, error: 'name and email are required' });
