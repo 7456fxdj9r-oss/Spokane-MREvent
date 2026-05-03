@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Source / unprocessed media — only the optimized slides/ versions go in the repo.
+/Cearra*.jpeg
+/Cearra*.jpg
+/Kolby*.jpeg
+/Kolby*.jpg
+/*.mov
+/*.mp4
+/*.heic
+/*.HEIC
