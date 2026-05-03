@@ -31,6 +31,7 @@ const HEADERS = [
   'Phone',
   'Invited By',
   'Newsletter Opt-In',
+  'Apprentice Interest',
   'Knows: Diabetes',
   'Knows: High Blood Pressure',
   'Knows: High Cholesterol',
@@ -76,6 +77,7 @@ function doPost(e) {
         case 'Phone':                      return data.phone || '';
         case 'Invited By':                 return data.invitedBy || '';
         case 'Newsletter Opt-In':          return data.newsletter ? 'Yes' : 'No';
+        case 'Apprentice Interest':        return data.apprentice ? 'Yes' : '';
         case 'Knows: Diabetes':            return data.hasDiabetes || '';
         case 'Knows: High Blood Pressure': return data.hasHighBP || '';
         case 'Knows: High Cholesterol':    return data.hasHighCholesterol || '';

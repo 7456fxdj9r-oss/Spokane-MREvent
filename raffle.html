@@ -468,6 +468,11 @@
             <label for="newsletter">Add me to the Metabolic Momentum newsletter</label>
         </div>
 
+        <div class="checkbox-row">
+            <input id="apprentice" name="apprentice" type="checkbox">
+            <label for="apprentice"><strong>I'm curious about the Metabolic Apprentice path.</strong> Tell me more about how I can help others get healthy too.</label>
+        </div>
+
         <p class="privacy">Your info goes to Craig and team only. We won't share or sell it.</p>
 
         <button class="submit" type="submit" id="submitBtn">Enter the Raffle</button>
@@ -571,6 +576,7 @@
             phone: form.phone.value.trim(),
             invitedBy: invitedBy,
             newsletter: form.newsletter.checked,
+            apprentice: form.apprentice.checked,
             hasDiabetes: pickRadio('hasDiabetes'),
             hasHighBP: pickRadio('hasHighBP'),
             hasHighCholesterol: pickRadio('hasHighCholesterol'),
