@@ -51,12 +51,31 @@
             gap: 8px;
             margin: 18px 0;
         }
+        .photos figure {
+            margin: 0;
+            text-align: center;
+        }
         .photos img {
             width: 100%;
             height: auto;
             border-radius: 10px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             background: #000;
+            object-fit: cover;
+            aspect-ratio: 3 / 4;
+        }
+        .photos figcaption {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 3px 10px;
+            background: rgba(243, 156, 18, 0.15);
+            border: 1px solid rgba(243, 156, 18, 0.4);
+            border-radius: 12px;
+            color: #f39c12;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
         .headline-stats {
@@ -173,8 +192,14 @@
     </div>
 
     <div class="photos">
-        <img src="slides/cearra-front.jpg" alt="Cearra — front, day one">
-        <img src="slides/cearra-side.jpg" alt="Cearra — side, day one">
+        <figure>
+            <img src="slides/cearra-front.jpg" alt="Cearra — Day One">
+            <figcaption>Before · 8/2025</figcaption>
+        </figure>
+        <figure>
+            <img src="slides/cearra-after.jpg" alt="Cearra — Now">
+            <figcaption>Now</figcaption>
+        </figure>
     </div>
 
     <div class="headline-stats">

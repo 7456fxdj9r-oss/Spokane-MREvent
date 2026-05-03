@@ -20,6 +20,10 @@
 const SHEET_ID   = '1ArpZ_eXSXy0IEMlYPI1m0r_LP-J-TIiYV93X38HOqCQ';
 const SHEET_NAME = 'Entries';
 
+// Raffle closes at end of day Mon May 4, 2026 (Pacific Time, UTC−7).
+// Change this string to extend or shorten the window.
+const RAFFLE_CUTOFF = new Date('2026-05-04T23:59:00-07:00');
+
 const HEADERS = [
   'Timestamp',
   'Name',
@@ -52,6 +56,11 @@ function doPost(e) {
       const lastRow = sheet.getLastRow();
       if (lastRow > 1) sheet.deleteRows(2, lastRow - 1);
       return jsonResponse_({ ok: true, cleared: true });
+    }
+
+    // Reject new entries after the raffle closes
+    if (new Date() >= RAFFLE_CUTOFF) {
+      return jsonResponse_({ ok: false, error: 'The raffle has closed.' });
     }
 
     if (!data.name || !data.email) {
