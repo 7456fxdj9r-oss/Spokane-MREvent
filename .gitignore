@@ -4,6 +4,8 @@
 # Source / unprocessed media — only the optimized slides/ versions go in the repo.
 /*.jpeg
 /*.JPEG
+/*.jpg
+/*.JPG
 /*.heic
 /*.HEIC
 /*.mov
