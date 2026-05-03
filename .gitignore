@@ -2,11 +2,14 @@
 .DS_Store
 
 # Source / unprocessed media — only the optimized slides/ versions go in the repo.
-/Cearra*.jpeg
-/Cearra*.jpg
-/Kolby*.jpeg
-/Kolby*.jpg
-/*.mov
-/*.mp4
+/*.jpeg
+/*.JPEG
 /*.heic
 /*.HEIC
+/*.mov
+/*.MOV
+/*.mp4
+/*.MP4
+# Allow optimized photos under slides/
+!slides/*.jpg
+!slides/*.jpeg
