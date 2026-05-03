@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cearra's Story — Metabolic Momentum</title>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon-32.png" sizes="32x32">
+    <meta name="theme-color" content="#1a252f">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            background: #1a252f;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            padding: 20px 14px 40px;
+            line-height: 1.45;
+        }
+        .wrap { max-width: 540px; margin: 0 auto; }
+
+        .top {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f39c12;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        h1 {
+            color: #fff;
+            font-size: 30px;
+            margin: 0 0 4px;
+            letter-spacing: 0.5px;
+        }
+        .lede {
+            font-size: 15px;
+            color: #bdc3c7;
+            font-style: italic;
+        }
+
+        .photos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 18px 0;
+        }
+        .photos img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            background: #000;
+        }
+
+        .headline-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 18px 0 24px;
+        }
+        .h-stat {
+            background: rgba(243, 156, 18, 0.08);
+            border: 1px solid rgba(243, 156, 18, 0.35);
+            border-radius: 10px;
+            padding: 12px 6px;
+            text-align: center;
+        }
+        .h-stat .num {
+            display: block;
+            color: #f39c12;
+            font-weight: 800;
+            font-size: 22px;
+            line-height: 1.1;
+        }
+        .h-stat .label {
+            display: block;
+            color: #ecf0f1;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-top: 6px;
+            line-height: 1.25;
+        }
+
+        .chart-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 14px 10px 10px;
+            margin: 14px 0;
+        }
+        .chart-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 0 6px 8px;
+        }
+        .chart-head h3 {
+            color: #ecf0f1;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .chart-head .delta {
+            font-size: 13px;
+            font-weight: 700;
+            color: #2ecc71;
+        }
+        .chart-head .delta.neg { color: #2ecc71; }
+        .chart-head .delta.pos { color: #e74c3c; }
+        .chart-head .delta.flat { color: #95a5a6; }
+        svg.chart {
+            width: 100%;
+            height: 220px;
+            display: block;
+        }
+        .chart-foot {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 6px 0;
+            font-size: 11px;
+            color: #95a5a6;
+        }
+
+        .takeaway {
+            background: rgba(243, 156, 18, 0.10);
+            border-left: 3px solid #f39c12;
+            padding: 14px 16px;
+            margin: 24px 0 18px;
+            border-radius: 0 8px 8px 0;
+            font-size: 15px;
+            color: #ecf0f1;
+        }
+        .takeaway strong { color: #f39c12; }
+
+        .footer-cta {
+            display: grid;
+            gap: 10px;
+            margin-top: 26px;
+        }
+        .footer-cta a {
+            display: block;
+            padding: 14px;
+            background: #d35400;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .footer-cta a.secondary {
+            background: transparent;
+            color: #ecf0f1;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+    <div class="top">
+        <div class="eyebrow">Real Person · Real Numbers</div>
+        <h1>Cearra's Story</h1>
+        <p class="lede">8 months. 45 pounds. Muscle preserved.</p>
+    </div>
+
+    <div class="photos">
+        <img src="slides/cearra-front.jpg" alt="Cearra — front, day one">
+        <img src="slides/cearra-side.jpg" alt="Cearra — side, day one">
+    </div>
+
+    <div class="headline-stats">
+        <div class="h-stat">
+            <span class="num">−45 lb</span>
+            <span class="label">Total<br>weight loss</span>
+        </div>
+        <div class="h-stat">
+            <span class="num">−11.4</span>
+            <span class="label">Body Fat<br>% points</span>
+        </div>
+        <div class="h-stat">
+            <span class="num">+1.2 lb</span>
+            <span class="label">Lean Mass<br>preserved</span>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-head">
+            <h3>Weight</h3>
+            <span class="delta neg">217 → 172 lb</span>
+        </div>
+        <svg class="chart" id="weightChart" preserveAspectRatio="none"></svg>
+        <div class="chart-foot">
+            <span>8/2025</span>
+            <span>4/2026</span>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-head">
+            <h3>Body Fat</h3>
+            <span class="delta neg">52% → 40.6%</span>
+        </div>
+        <svg class="chart" id="bfChart" preserveAspectRatio="none"></svg>
+        <div class="chart-foot">
+            <span>10/2025</span>
+            <span>4/2026</span>
+        </div>
+    </div>
+
+    <div class="chart-card">
+        <div class="chart-head">
+            <h3>Lean Mass</h3>
+            <span class="delta flat">101.4 → 102.6 lb</span>
+        </div>
+        <svg class="chart" id="leanChart" preserveAspectRatio="none"></svg>
+        <div class="chart-foot">
+            <span>10/2025</span>
+            <span>4/2026</span>
+        </div>
+    </div>
+
+    <p class="takeaway">
+        Most weight-loss attempts melt fat <em>and</em> muscle. Cearra's lean mass actually <strong>went up</strong> while she lost <strong>45 pounds</strong>. That's the difference between losing weight and losing the right kind of weight.
+    </p>
+
+    <div class="footer-cta">
+        <a href="raffle.html">🎟️ Enter the Raffle</a>
+        <a href="index.html" class="secondary">← Back to the hub</a>
+    </div>
+
+</div>
+
+<script>
+    // ----- Cearra's data -----
+    var weightData = [
+        ['8/17/2025', 217],
+        ['9/1/2025', 213.6],
+        ['9/8/2025', 212],
+        ['9/22/2025', 212],
+        ['9/29/2025', 210],
+        ['10/6/2025', 211],
+        ['10/13/2025', 211],
+        ['10/20/2025', 212],
+        ['11/10/2025', 210.4],
+        ['11/17/2025', 212],
+        ['11/24/2025', 207],
+        ['12/1/2025', 205.2],
+        ['12/8/2025', 201.2],
+        ['12/15/2025', 201.4],
+        ['12/29/2025', 198],
+        ['1/5/2026', 194.2],
+        ['1/12/2026', 194.6],
+        ['1/19/2026', 192.4],
+        ['1/26/2026', 192.8],
+        ['2/2/2026', 188.4],
+        ['2/16/2026', 185.6],
+        ['2/23/2026', 185],
+        ['3/9/2026', 181.6],
+        ['3/16/2026', 181.2],
+        ['3/23/2026', 179.4],
+        ['3/30/2026', 177.6],
+        ['4/6/2026', 176],
+        ['4/13/2026', 174.8],
+        ['4/20/2026', 175],
+        ['4/27/2026', 172]
+    ];
+
+    var bfData = [
+        ['10/13/2025', 52],
+        ['11/10/2025', 51.8],
+        ['11/24/2025', 50.8],
+        ['12/1/2025', 50.3],
+        ['12/8/2025', 49],
+        ['12/15/2025', 49.1],
+        ['12/29/2025', 48.1],
+        ['1/5/2026', 47],
+        ['1/12/2026', 47.1],
+        ['1/19/2026', 46.5],
+        ['1/26/2026', 46.6],
+        ['2/2/2026', 45.3],
+        ['2/16/2026', 44.5],
+        ['3/9/2026', 43.3],
+        ['3/16/2026', 43.1],
+        ['3/23/2026', 42.6],
+        ['3/30/2026', 42.1],
+        ['4/6/2026', 41.6],
+        ['4/13/2026', 41.6],
+        ['4/20/2026', 41.3],
+        ['4/27/2026', 40.6]
+    ];
+
+    var leanData = [
+        ['10/13/2025', 101.4],
+        ['11/10/2025', 101.6],
+        ['11/24/2025', 101.8],
+        ['12/1/2025', 101.8],
+        ['12/8/2025', 102.6],
+        ['12/15/2025', 102.6],
+        ['12/29/2025', 102.6],
+        ['1/5/2026', 103],
+        ['1/12/2026', 103],
+        ['1/19/2026', 103],
+        ['1/26/2026', 103],
+        ['2/2/2026', 103],
+        ['3/9/2026', 103],
+        ['3/16/2026', 103.2],
+        ['3/23/2026', 103],
+        ['3/30/2026', 102.8],
+        ['4/6/2026', 103],
+        ['4/13/2026', 102.8],
+        ['4/20/2026', 102.6]
+    ];
+
+    // ----- Chart rendering -----
+    var NS = 'http://www.w3.org/2000/svg';
+
+    function el(name, attrs) {
+        var n = document.createElementNS(NS, name);
+        for (var k in attrs) n.setAttribute(k, attrs[k]);
+        return n;
+    }
+
+    function drawChart(svgId, data, opts) {
+        var svg = document.getElementById(svgId);
+        var W = svg.clientWidth || 320;
+        var H = 220;
+        var pad = { top: 22, right: 14, bottom: 14, left: 36 };
+        var iw = W - pad.left - pad.right;
+        var ih = H - pad.top - pad.bottom;
+
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        var pts = data.map(function (d) {
+            return { t: new Date(d[0]).getTime(), v: d[1] };
+        });
+        var ts = pts.map(function (p) { return p.t; });
+        var vs = pts.map(function (p) { return p.v; });
+        var tMin = Math.min.apply(null, ts);
+        var tMax = Math.max.apply(null, ts);
+        var vMin = opts.yMin !== undefined ? opts.yMin : Math.min.apply(null, vs) - opts.padY;
+        var vMax = opts.yMax !== undefined ? opts.yMax : Math.max.apply(null, vs) + opts.padY;
+
+        function x(t) { return pad.left + ((t - tMin) / (tMax - tMin)) * iw; }
+        function y(v) { return pad.top + (1 - (v - vMin) / (vMax - vMin)) * ih; }
+
+        // gridlines (3 horizontal)
+        for (var i = 0; i <= 2; i++) {
+            var gv = vMin + (vMax - vMin) * (i / 2);
+            var gy = y(gv);
+            svg.appendChild(el('line', {
+                x1: pad.left, x2: W - pad.right,
+                y1: gy, y2: gy,
+                stroke: 'rgba(255,255,255,0.08)',
+                'stroke-width': '1'
+            }));
+            svg.appendChild(el('text', {
+                x: pad.left - 5, y: gy + 3,
+                fill: 'rgba(255,255,255,0.4)',
+                'font-size': '10', 'text-anchor': 'end'
+            })).textContent = (opts.fmt ? opts.fmt(gv) : Math.round(gv));
+        }
+
+        // gradient
+        var gradId = svgId + '-grad';
+        var defs = el('defs', {});
+        var grad = el('linearGradient', { id: gradId, x1: '0', x2: '0', y1: '0', y2: '1' });
+        grad.appendChild(el('stop', { offset: '0%', 'stop-color': '#f39c12', 'stop-opacity': '0.45' }));
+        grad.appendChild(el('stop', { offset: '100%', 'stop-color': '#f39c12', 'stop-opacity': '0' }));
+        defs.appendChild(grad);
+        svg.appendChild(defs);
+
+        // build line path
+        var lineD = pts.map(function (p, i) {
+            return (i === 0 ? 'M ' : 'L ') + x(p.t) + ' ' + y(p.v);
+        }).join(' ');
+        var fillD = lineD + ' L ' + x(pts[pts.length - 1].t) + ' ' + (pad.top + ih) +
+                    ' L ' + x(pts[0].t) + ' ' + (pad.top + ih) + ' Z';
+
+        svg.appendChild(el('path', {
+            d: fillD,
+            fill: 'url(#' + gradId + ')'
+        }));
+        svg.appendChild(el('path', {
+            d: lineD,
+            fill: 'none',
+            stroke: '#f39c12',
+            'stroke-width': '2.5',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round'
+        }));
+
+        // dots on every data point
+        pts.forEach(function (p) {
+            svg.appendChild(el('circle', {
+                cx: x(p.t), cy: y(p.v), r: 2.5,
+                fill: '#f39c12'
+            }));
+        });
+
+        // start and end value labels
+        var first = pts[0];
+        var last = pts[pts.length - 1];
+        svg.appendChild(el('circle', {
+            cx: x(first.t), cy: y(first.v), r: 5,
+            fill: '#f39c12', stroke: '#1a252f', 'stroke-width': '2'
+        }));
+        svg.appendChild(el('circle', {
+            cx: x(last.t), cy: y(last.v), r: 5,
+            fill: '#f39c12', stroke: '#1a252f', 'stroke-width': '2'
+        }));
+
+        var startLabel = el('text', {
+            x: x(first.t) + 8, y: y(first.v) - 8,
+            fill: '#f39c12', 'font-size': '12', 'font-weight': '700',
+            'text-anchor': 'start'
+        });
+        startLabel.textContent = (opts.fmt ? opts.fmt(first.v) : first.v);
+        svg.appendChild(startLabel);
+
+        var endLabel = el('text', {
+            x: x(last.t) - 8, y: y(last.v) - 8,
+            fill: '#f39c12', 'font-size': '13', 'font-weight': '800',
+            'text-anchor': 'end'
+        });
+        endLabel.textContent = (opts.fmt ? opts.fmt(last.v) : last.v);
+        svg.appendChild(endLabel);
+    }
+
+    function render() {
+        drawChart('weightChart', weightData, { padY: 4, fmt: function (v) { return Math.round(v) + ' lb'; } });
+        drawChart('bfChart', bfData, { padY: 1.5, fmt: function (v) { return v.toFixed(1) + '%'; } });
+        drawChart('leanChart', leanData, { padY: 0.6, yMin: 100, yMax: 104, fmt: function (v) { return v.toFixed(1) + ' lb'; } });
+    }
+
+    render();
+    window.addEventListener('resize', render);
+</script>
+
+</body>
+</html>
