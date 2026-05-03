@@ -26,6 +26,12 @@
             margin: 0 0 5px;
             text-align: center;
         }
+        h2 {
+            color: #d35400;
+            font-size: 22px;
+            margin: 0 0 5px;
+            text-align: center;
+        }
         p.lede {
             text-align: center;
             font-size: 14px;
@@ -59,8 +65,7 @@
         input[type=text],
         input[type=email],
         input[type=tel],
-        textarea,
-        select {
+        textarea {
             width: 100%;
             padding: 10px 12px;
             font-size: 15px;
@@ -71,7 +76,7 @@
             background: #fff;
         }
         textarea { min-height: 70px; resize: vertical; }
-        input:focus, textarea:focus, select:focus {
+        input:focus, textarea:focus {
             outline: none;
             border-color: #d35400;
             box-shadow: 0 0 0 2px rgba(211,84,0,0.15);
@@ -85,25 +90,23 @@
             flex: 1;
             margin: 0;
             text-align: center;
-            padding: 10px 0;
+            padding: 0;
             border: 1px solid #ccc;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
             background: #fafafa;
             transition: all 0.15s;
+            overflow: hidden;
         }
         .scale input { display: none; }
+        .scale label span {
+            display: block;
+            padding: 10px 0;
+        }
         .scale input:checked + span {
             background: #d35400;
             color: #fff;
-            border-color: #d35400;
-        }
-        .scale label span {
-            display: block;
-            margin: -10px 0;
-            padding: 10px 0;
-            border-radius: 6px;
         }
         .radio-row {
             margin-top: 6px;
@@ -112,10 +115,25 @@
             display: inline-flex;
             align-items: center;
             font-weight: 500;
-            margin: 4px 12px 4px 0;
+            margin: 4px 18px 4px 0;
             cursor: pointer;
         }
         .radio-row input { margin-right: 6px; }
+        .check-list label {
+            display: flex;
+            align-items: flex-start;
+            margin: 8px 0;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 12px 14px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            transition: all 0.15s;
+        }
+        .check-list label:hover { background: #f0f0f0; }
+        .check-list input { margin: 3px 10px 0 0; transform: scale(1.2); }
+        .check-list input:checked + span { color: #d35400; font-weight: 600; }
         .checkbox-row {
             display: flex;
             align-items: flex-start;
@@ -143,6 +161,19 @@
         }
         button.submit:hover:not(:disabled) { background: #a8430a; }
         button.submit:disabled { background: #999; cursor: not-allowed; }
+        button.skip {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background: transparent;
+            color: #666;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        button.skip:hover { background: #f0f0f0; color: #333; }
         .status {
             margin-top: 15px;
             text-align: center;
@@ -150,15 +181,30 @@
             min-height: 20px;
         }
         .status.error { color: #c0392b; }
-        .status.success { color: #27ae60; font-weight: bold; }
         .success-card {
             text-align: center;
             padding: 30px 10px;
+        }
+        .success-card .check {
+            font-size: 60px;
+            line-height: 1;
+            margin-bottom: 10px;
         }
         .success-card h2 {
             color: #27ae60;
             margin: 0 0 10px;
         }
+        .step-banner {
+            background: #fef3e2;
+            color: #a8430a;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+            margin: 0 0 20px;
+            font-weight: 600;
+        }
+        .step-banner .check { color: #27ae60; margin-right: 6px; }
         .back-link {
             display: inline-block;
             margin-top: 20px;
@@ -171,13 +217,12 @@
 </head>
 <body>
 
-<div class="container" id="formCard">
+<!-- STEP 1: Raffle entry essentials -->
+<div class="container" id="stepOne">
     <h1>🎟️ Tonight's Raffle</h1>
-    <p class="lede">Enter to win — and tell us a little about where you're at.</p>
+    <p class="lede">Enter to win — takes 15 seconds.</p>
 
-    <form id="raffleForm" novalidate>
-        <div class="section-title">Your Info</div>
-
+    <form id="step1Form" novalidate>
         <label for="name">Full Name <span class="req">*</span></label>
         <input id="name" name="name" type="text" required autocomplete="name">
 
@@ -189,6 +234,30 @@
 
         <label for="invitedBy">Who invited you tonight? <span class="req">*</span></label>
         <input id="invitedBy" name="invitedBy" type="text" required>
+
+        <div class="checkbox-row">
+            <input id="newsletter" name="newsletter" type="checkbox" checked>
+            <label for="newsletter">Add me to the Metabolic Momentum newsletter</label>
+        </div>
+
+        <button class="submit" type="submit" id="submit1Btn">Enter the Raffle</button>
+        <div class="status" id="status1"></div>
+    </form>
+</div>
+
+<!-- STEP 2: Optional intake -->
+<div class="container" id="stepTwo" style="display:none;">
+    <div class="step-banner"><span class="check">✓</span> You're entered!</div>
+    <h2>Quick — tell us a bit more</h2>
+    <p class="lede">Optional. Helps Craig tailor what you'll hear tonight.</p>
+
+    <form id="step2Form" novalidate>
+        <div class="section-title">Raise your hand if…</div>
+        <div class="check-list">
+            <label><input type="checkbox" name="hasDiabetes"><span>I or someone close to me has <strong>diabetes</strong> or pre-diabetes</span></label>
+            <label><input type="checkbox" name="hasHighBP"><span>I or someone close to me has <strong>high blood pressure</strong></span></label>
+            <label><input type="checkbox" name="hasHighCholesterol"><span>I or someone close to me has <strong>high cholesterol</strong></span></label>
+        </div>
 
         <div class="section-title">Rate the areas you wish were better</div>
         <p class="rate-help">1 = doing great &nbsp;·&nbsp; 5 = really need help &nbsp;·&nbsp; leave blank if N/A</p>
@@ -267,88 +336,130 @@
         <label for="frustration">Anything else on your mind? (optional)</label>
         <textarea id="frustration" name="frustration"></textarea>
 
-        <div class="checkbox-row">
-            <input id="newsletter" name="newsletter" type="checkbox" checked>
-            <label for="newsletter">Add me to the Metabolic Momentum newsletter</label>
-        </div>
-
-        <button class="submit" type="submit" id="submitBtn">Enter the Raffle</button>
-        <div class="status" id="status"></div>
+        <button class="submit" type="submit" id="submit2Btn">Submit</button>
+        <button class="skip" type="button" id="skipBtn">Skip — I'm done</button>
+        <div class="status" id="status2"></div>
     </form>
 </div>
 
-<div class="container" id="successCard" style="display:none;">
+<!-- DONE -->
+<div class="container" id="doneCard" style="display:none;">
     <div class="success-card">
-        <h2>You're in! 🎉</h2>
+        <div class="check">🎉</div>
+        <h2>You're all set!</h2>
         <p>Good luck tonight — winners will be drawn from the wheel.</p>
         <a href="index.html" class="back-link">← Back to the hub</a>
     </div>
 </div>
 
 <script>
-    // Apps Script web app URL — paste the deployment URL here after deploying Code.gs.
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw61QzMJFkGR91mGO2CSBn9gGRumszH2zeMZYIS5SyzRjlz18uMvFEUoJf4nTxFcSXIwA/exec';
 
-    const form = document.getElementById('raffleForm');
-    const statusEl = document.getElementById('status');
-    const submitBtn = document.getElementById('submitBtn');
-    const formCard = document.getElementById('formCard');
-    const successCard = document.getElementById('successCard');
+    const stepOne   = document.getElementById('stepOne');
+    const stepTwo   = document.getElementById('stepTwo');
+    const doneCard  = document.getElementById('doneCard');
+    const step1Form = document.getElementById('step1Form');
+    const step2Form = document.getElementById('step2Form');
+    const status1   = document.getElementById('status1');
+    const status2   = document.getElementById('status2');
+    const submit1Btn = document.getElementById('submit1Btn');
+    const submit2Btn = document.getElementById('submit2Btn');
+    const skipBtn   = document.getElementById('skipBtn');
 
-    form.addEventListener('submit', async (e) => {
+    let entryId = null;
+
+    // -------- STEP 1 --------
+    step1Form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        statusEl.className = 'status';
-        statusEl.textContent = '';
+        status1.className = 'status';
+        status1.textContent = '';
 
-        const pick = (n) => (form.querySelector('input[name=' + n + ']:checked') || {}).value || '';
         const data = {
-            name: form.name.value.trim(),
-            email: form.email.value.trim(),
-            phone: form.phone.value.trim(),
-            invitedBy: form.invitedBy.value.trim(),
-            rateEnergy: pick('rateEnergy'),
-            rateSleep: pick('rateSleep'),
-            rateWeight: pick('rateWeight'),
-            rateCravings: pick('rateCravings'),
-            rateMood: pick('rateMood'),
-            rateDigestion: pick('rateDigestion'),
-            rateCommunity: pick('rateCommunity'),
-            triedBefore: pick('triedBefore'),
-            frustration: form.frustration.value.trim(),
-            newsletter: form.newsletter.checked
+            name: step1Form.name.value.trim(),
+            email: step1Form.email.value.trim(),
+            phone: step1Form.phone.value.trim(),
+            invitedBy: step1Form.invitedBy.value.trim(),
+            newsletter: step1Form.newsletter.checked
         };
 
         if (!data.name || !data.email || !data.invitedBy) {
-            statusEl.className = 'status error';
-            statusEl.textContent = 'Please fill in the required fields.';
+            status1.className = 'status error';
+            status1.textContent = 'Please fill in name, email, and who invited you.';
             return;
         }
 
-        if (SCRIPT_URL === '__SCRIPT_URL__') {
-            statusEl.className = 'status error';
-            statusEl.textContent = 'Form not configured yet. (Apps Script URL missing.)';
-            return;
-        }
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Entering...';
+        submit1Btn.disabled = true;
+        submit1Btn.textContent = 'Entering...';
 
         try {
-            // text/plain body avoids CORS preflight on Apps Script web apps
             const res = await fetch(SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify(data)
             });
             const json = await res.json();
             if (!json.ok) throw new Error(json.error || 'Server error');
-            formCard.style.display = 'none';
-            successCard.style.display = 'block';
+            entryId = json.id;
+            stepOne.style.display = 'none';
+            stepTwo.style.display = 'block';
+            window.scrollTo(0, 0);
         } catch (err) {
-            statusEl.className = 'status error';
-            statusEl.textContent = 'Could not submit — please try again or grab a host. (' + err.message + ')';
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Enter the Raffle';
+            status1.className = 'status error';
+            status1.textContent = 'Could not submit — please try again or grab a host. (' + err.message + ')';
+            submit1Btn.disabled = false;
+            submit1Btn.textContent = 'Enter the Raffle';
         }
+    });
+
+    // -------- STEP 2 --------
+    step2Form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        status2.className = 'status';
+        status2.textContent = '';
+
+        const pickRadio = (n) => (step2Form.querySelector('input[name=' + n + ']:checked') || {}).value || '';
+        const data = {
+            action: 'update',
+            id: entryId,
+            hasDiabetes: step2Form.hasDiabetes.checked,
+            hasHighBP: step2Form.hasHighBP.checked,
+            hasHighCholesterol: step2Form.hasHighCholesterol.checked,
+            rateEnergy: pickRadio('rateEnergy'),
+            rateSleep: pickRadio('rateSleep'),
+            rateWeight: pickRadio('rateWeight'),
+            rateCravings: pickRadio('rateCravings'),
+            rateMood: pickRadio('rateMood'),
+            rateDigestion: pickRadio('rateDigestion'),
+            rateCommunity: pickRadio('rateCommunity'),
+            triedBefore: pickRadio('triedBefore'),
+            frustration: step2Form.frustration.value.trim()
+        };
+
+        submit2Btn.disabled = true;
+        submit2Btn.textContent = 'Submitting...';
+
+        try {
+            const res = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+            const json = await res.json();
+            if (!json.ok) throw new Error(json.error || 'Server error');
+            stepTwo.style.display = 'none';
+            doneCard.style.display = 'block';
+            window.scrollTo(0, 0);
+        } catch (err) {
+            status2.className = 'status error';
+            status2.textContent = 'Could not save — but you\'re still entered. (' + err.message + ')';
+            submit2Btn.disabled = false;
+            submit2Btn.textContent = 'Submit';
+        }
+    });
+
+    // -------- SKIP --------
+    skipBtn.addEventListener('click', () => {
+        stepTwo.style.display = 'none';
+        doneCard.style.display = 'block';
+        window.scrollTo(0, 0);
     });
 </script>
 

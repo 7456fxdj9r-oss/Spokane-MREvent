@@ -1,21 +1,18 @@
 /**
  * Metabolic Momentum — Raffle backend (Google Apps Script)
  *
- * Setup:
- *   1. Open the Google Sheet:
- *      https://docs.google.com/spreadsheets/d/1ArpZ_eXSXy0IEMlYPI1m0r_LP-J-TIiYV93X38HOqCQ/edit
- *   2. Extensions → Apps Script.
- *   3. Replace the default Code.gs contents with this file. Save.
- *   4. (Once, after pasting an updated version) From the function dropdown
- *      at the top, choose `resetHeaders` and click Run. This wipes the
- *      "Entries" tab and writes fresh column headers.
- *      ⚠️  Only do this if you want to start with an empty sheet.
- *   5. Deploy → Manage deployments → pencil ✏️ next to the active deployment
- *      → Version: New version → Deploy. The Web app URL stays the same.
+ * Setup / redeploy after editing:
+ *   1. Replace Code.gs in Apps Script with this file. Save.
+ *   2. Once (only when HEADERS change): from the function dropdown choose
+ *      `resetHeaders` and click Run. ⚠️ Wipes all entries.
+ *   3. Deploy → Manage deployments → ✏️ pencil → Version: New version
+ *      → Deploy. The Web app URL stays the same.
  *
  * Endpoints:
- *   POST  <url>                 → append a raffle entry (body = JSON)
- *   GET   <url>?action=list     → returns { ok: true, entries: [{id, name}, ...] }
+ *   POST <url>  body { ...entry... }            → create entry, returns { ok, id }
+ *   POST <url>  body { action:'update', id, ... } → fill in step-2 fields
+ *   POST <url>  body { action:'clear' }          → delete all entries
+ *   GET  <url>?action=list                       → { ok, entries:[{id, name}, ...] }
  */
 
 const SHEET_ID   = '1ArpZ_eXSXy0IEMlYPI1m0r_LP-J-TIiYV93X38HOqCQ';
@@ -27,6 +24,10 @@ const HEADERS = [
   'Email',
   'Phone',
   'Invited By',
+  'Newsletter Opt-In',
+  'Knows: Diabetes',
+  'Knows: High Blood Pressure',
+  'Knows: High Cholesterol',
   'Rate: Energy',
   'Rate: Sleep',
   'Rate: Weight',
@@ -35,16 +36,31 @@ const HEADERS = [
   'Rate: Digestion',
   'Rate: Community/Connection',
   'Tried Program Before',
-  'Anything Else',
-  'Newsletter Opt-In'
+  'Anything Else'
 ];
 
+// Map step-2 field names → header column names. Order doesn't matter; lookup is by header name.
+const UPDATE_FIELDS = {
+  hasDiabetes:        'Knows: Diabetes',
+  hasHighBP:          'Knows: High Blood Pressure',
+  hasHighCholesterol: 'Knows: High Cholesterol',
+  rateEnergy:         'Rate: Energy',
+  rateSleep:          'Rate: Sleep',
+  rateWeight:         'Rate: Weight',
+  rateCravings:       'Rate: Cravings/Blood Sugar',
+  rateMood:           'Rate: Mood/Stress',
+  rateDigestion:      'Rate: Digestion',
+  rateCommunity:      'Rate: Community/Connection',
+  triedBefore:        'Tried Program Before',
+  frustration:        'Anything Else'
+};
+
 function doPost(e) {
+  const lock = LockService.getDocumentLock();
+  lock.waitLock(5000);
   try {
     const data = JSON.parse(e.postData.contents || '{}');
 
-    // Admin: clear all entries (called from wheel.html "Clear all entries" button).
-    // The wheel URL is host-only by obscurity; the button itself double-confirms.
     if (data.action === 'clear') {
       const sheet = getSheet_();
       const lastRow = sheet.getLastRow();
@@ -52,34 +68,60 @@ function doPost(e) {
       return jsonResponse_({ ok: true, cleared: true });
     }
 
-    const sheet = getSheet_();
-
-    if (!data.name || !data.email) {
-      return jsonResponse_({ ok: false, error: 'name and email are required' });
+    if (data.action === 'update') {
+      return updateEntry_(data);
     }
 
-    sheet.appendRow([
-      new Date(),
-      data.name || '',
-      data.email || '',
-      data.phone || '',
-      data.invitedBy || '',
-      data.rateEnergy || '',
-      data.rateSleep || '',
-      data.rateWeight || '',
-      data.rateCravings || '',
-      data.rateMood || '',
-      data.rateDigestion || '',
-      data.rateCommunity || '',
-      data.triedBefore || '',
-      data.frustration || '',
-      data.newsletter ? 'Yes' : 'No'
-    ]);
-
-    return jsonResponse_({ ok: true });
+    return createEntry_(data);
   } catch (err) {
     return jsonResponse_({ ok: false, error: String(err) });
+  } finally {
+    lock.releaseLock();
   }
+}
+
+function createEntry_(data) {
+  if (!data.name || !data.email) {
+    return jsonResponse_({ ok: false, error: 'name and email are required' });
+  }
+  const sheet = getSheet_();
+  // Build a row in HEADERS order, leaving step-2 columns blank.
+  const row = HEADERS.map(h => {
+    switch (h) {
+      case 'Timestamp':         return new Date();
+      case 'Name':              return data.name || '';
+      case 'Email':             return data.email || '';
+      case 'Phone':             return data.phone || '';
+      case 'Invited By':        return data.invitedBy || '';
+      case 'Newsletter Opt-In': return data.newsletter ? 'Yes' : 'No';
+      default:                  return '';
+    }
+  });
+  sheet.appendRow(row);
+  const id = sheet.getLastRow();
+  return jsonResponse_({ ok: true, id: id });
+}
+
+function updateEntry_(data) {
+  const id = parseInt(data.id, 10);
+  if (!id || id < 2) {
+    return jsonResponse_({ ok: false, error: 'invalid id' });
+  }
+  const sheet = getSheet_();
+  if (id > sheet.getLastRow()) {
+    return jsonResponse_({ ok: false, error: 'id out of range' });
+  }
+  const headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  for (const [field, header] of Object.entries(UPDATE_FIELDS)) {
+    if (!(field in data)) continue;
+    const colIdx = headerRow.indexOf(header);
+    if (colIdx < 0) continue;
+    let val = data[field];
+    // Booleans → Yes/blank. Numbers/strings → as-is.
+    if (typeof val === 'boolean') val = val ? 'Yes' : '';
+    sheet.getRange(id, colIdx + 1).setValue(val);
+  }
+  return jsonResponse_({ ok: true, updated: id });
 }
 
 function doGet(e) {
@@ -100,13 +142,13 @@ function doGet(e) {
     }
   }
 
-  return jsonResponse_({ ok: true, message: 'Metabolic Momentum raffle endpoint. POST to submit, GET ?action=list to read.' });
+  return jsonResponse_({ ok: true, message: 'Metabolic Momentum raffle endpoint.' });
 }
 
 /**
  * Wipe the Entries tab and rewrite headers.
- * Run this manually from the Apps Script editor when you change the
- * HEADERS array above. ⚠️ Destroys all existing entries.
+ * Run this manually from the Apps Script editor when HEADERS changes.
+ * ⚠️ Destroys all existing entries.
  */
 function resetHeaders() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
