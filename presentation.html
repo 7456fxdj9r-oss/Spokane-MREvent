@@ -260,6 +260,50 @@
             letter-spacing: 1px;
         }
 
+        /* Metabolic Transformation chart slide */
+        .chart-slide h2 { margin-bottom: 4px; }
+        .chart-slide .chart-sub {
+            color: #bdc3c7;
+            font-size: clamp(16px, 1.8vw, 24px);
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        .chart-frame {
+            width: 88vw;
+            max-width: 1500px;
+            height: 60vh;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 18px 18px 8px;
+        }
+        .chart-frame svg { width: 100%; height: 100%; display: block; }
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 12px;
+            font-size: clamp(14px, 1.5vw, 20px);
+            color: #ecf0f1;
+        }
+        .chart-legend .item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        .chart-legend .dot {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+        }
+        .chart-take {
+            margin-top: 10px;
+            font-size: clamp(14px, 1.6vw, 22px);
+            color: #95a5a6;
+            font-style: italic;
+            max-width: 80vw;
+        }
+
         /* Closing */
         .closing h1 { font-size: clamp(48px, 9vw, 120px); }
         .closing .tagline { color: #f39c12; }
@@ -393,6 +437,21 @@
         <p class="tn-takeaway"><strong>Body fat down 12 points.</strong> Lean mass and muscle <strong>fully preserved</strong> — that's what real fat loss looks like.</p>
     </section>
 
+    <!-- 6b. Cearra — Metabolic Transformation chart -->
+    <section class="slide chart-slide" data-step-count="1">
+        <h2>Cearra — Metabolic Transformation</h2>
+        <p class="chart-sub">Fat went. Lean stayed.</p>
+        <div class="chart-frame">
+            <svg id="cearraChart" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="chart-legend">
+            <span class="item"><span class="dot" style="background:#f39c12"></span>Weight (lb)</span>
+            <span class="item"><span class="dot" style="background:#e74c3c"></span>Body Fat (%, right axis)</span>
+            <span class="item"><span class="dot" style="background:#2ecc71"></span>Lean Mass (lb)</span>
+        </div>
+        <p class="chart-take">Weight (orange) and body fat (red) crashed. Lean mass (green) barely moved — that's fat going, not muscle.</p>
+    </section>
+
     <!-- 7. Kolby — Day One -->
     <section class="slide" data-step-count="1">
         <h2>Kolby — Day One</h2>
@@ -434,6 +493,21 @@
         <p class="tn-takeaway"><strong>Body fat dropped 17.6 points.</strong> Skeletal muscle <strong>went up 2 lb</strong> — losing fat while gaining muscle is the holy grail.</p>
     </section>
 
+    <!-- 8b. Kolby — Metabolic Transformation chart -->
+    <section class="slide chart-slide" data-step-count="1">
+        <h2>Kolby — Metabolic Transformation</h2>
+        <p class="chart-sub">95 pounds gone. Lean mass held.</p>
+        <div class="chart-frame">
+            <svg id="kolbyChart" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="chart-legend">
+            <span class="item"><span class="dot" style="background:#f39c12"></span>Weight (lb)</span>
+            <span class="item"><span class="dot" style="background:#e74c3c"></span>Body Fat (%, right axis)</span>
+            <span class="item"><span class="dot" style="background:#2ecc71"></span>Lean Mass (lb)</span>
+        </div>
+        <p class="chart-take">Weight (orange) and body fat (red) crashed. Lean mass (green) barely moved — that's fat going, not muscle.</p>
+    </section>
+
     <!-- 9. Closing -->
     <section class="slide closing" data-step-count="1">
         <h1>Let's Go.</h1>
@@ -454,7 +528,8 @@
 <script>
     var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
     var counter = document.getElementById('counter');
-    var idx = 0;
+    var startSlide = parseInt((location.search.match(/[?&]slide=(\d+)/) || [])[1], 10);
+    var idx = isFinite(startSlide) ? Math.max(0, Math.min(slides.length - 1, startSlide - 1)) : 0;
     var step = 0;
 
     function totalSteps(slide) {
@@ -520,6 +595,257 @@
         var w = window.innerWidth;
         if (e.clientX > w / 2) next(); else prev();
     });
+
+    // ===== Metabolic Transformation chart slides =====
+    // Time-series data duplicated from cearra.html / kolby.html. If those
+    // pages get updated, mirror the change here.
+    var CEARRA = {
+        weight: [
+            ['8/17/2025', 217], ['9/1/2025', 213.6], ['9/8/2025', 212],
+            ['9/22/2025', 212], ['9/29/2025', 210], ['10/6/2025', 211],
+            ['10/13/2025', 211], ['10/20/2025', 212], ['11/10/2025', 210.4],
+            ['11/17/2025', 212], ['11/24/2025', 207], ['12/1/2025', 205.2],
+            ['12/8/2025', 201.2], ['12/15/2025', 201.4], ['12/29/2025', 198],
+            ['1/5/2026', 194.2], ['1/12/2026', 194.6], ['1/19/2026', 192.4],
+            ['1/26/2026', 192.8], ['2/2/2026', 188.4], ['2/16/2026', 185.6],
+            ['2/23/2026', 185], ['3/9/2026', 181.6], ['3/16/2026', 181.2],
+            ['3/23/2026', 179.4], ['3/30/2026', 177.6], ['4/6/2026', 176],
+            ['4/13/2026', 174.8], ['4/20/2026', 175], ['4/27/2026', 172]
+        ],
+        bf: [
+            ['10/13/2025', 52], ['11/10/2025', 51.8], ['11/24/2025', 50.8],
+            ['12/1/2025', 50.3], ['12/8/2025', 49], ['12/15/2025', 49.1],
+            ['12/29/2025', 48.1], ['1/5/2026', 47], ['1/12/2026', 47.1],
+            ['1/19/2026', 46.5], ['1/26/2026', 46.6], ['2/2/2026', 45.3],
+            ['2/16/2026', 44.5], ['3/9/2026', 43.3], ['3/16/2026', 43.1],
+            ['3/23/2026', 42.6], ['3/30/2026', 42.1], ['4/6/2026', 41.6],
+            ['4/13/2026', 41.6], ['4/20/2026', 41.3], ['4/27/2026', 40.6]
+        ],
+        lean: [
+            ['10/13/2025', 101.4], ['11/10/2025', 101.6], ['11/24/2025', 101.8],
+            ['12/1/2025', 101.8], ['12/8/2025', 102.6], ['12/15/2025', 102.6],
+            ['12/29/2025', 102.6], ['1/5/2026', 103], ['1/12/2026', 103],
+            ['1/19/2026', 103], ['1/26/2026', 103], ['2/2/2026', 103],
+            ['3/9/2026', 103], ['3/16/2026', 103.2], ['3/23/2026', 103],
+            ['3/30/2026', 102.8], ['4/6/2026', 103], ['4/13/2026', 102.8],
+            ['4/20/2026', 102.6]
+        ]
+    };
+    var KOLBY = {
+        weight: [
+            ['8/9/2025', 350], ['8/23/2025', 323], ['8/25/2025', 319],
+            ['9/1/2025', 312], ['9/8/2025', 304], ['9/15/2025', 298.2],
+            ['9/22/2025', 291.1], ['9/29/2025', 282.6], ['10/6/2025', 278.2],
+            ['10/13/2025', 273.4], ['10/20/2025', 270.6], ['10/27/2025', 266.4],
+            ['11/10/2025', 258.6], ['11/24/2025', 254.2], ['12/1/2025', 251.8],
+            ['12/8/2025', 248.4], ['12/15/2025', 246.6], ['12/29/2025', 247.2],
+            ['1/5/2026', 248], ['1/12/2026', 246.2], ['1/26/2026', 248],
+            ['2/16/2026', 249.8], ['3/9/2026', 248], ['3/23/2026', 248],
+            ['3/30/2026', 260], ['4/6/2026', 256], ['4/13/2026', 255],
+            ['4/20/2026', 254.8]
+        ],
+        bf: [
+            ['8/9/2025', 44.6], ['8/25/2025', 39.9], ['9/8/2025', 37.1],
+            ['9/22/2025', 34.6], ['10/6/2025', 32.2], ['10/13/2025', 31.2],
+            ['10/20/2025', 30.7], ['10/27/2025', 29.9], ['11/10/2025', 28.5],
+            ['11/24/2025', 27.7], ['12/1/2025', 27.2], ['12/8/2025', 26.6],
+            ['12/15/2025', 26.3], ['12/29/2025', 26.4], ['1/12/2026', 26.2],
+            ['1/26/2026', 26.7], ['2/16/2026', 26.9], ['3/9/2026', 26.5],
+            ['4/13/2026', 27.9], ['4/20/2026', 27.8]
+        ],
+        lean: [
+            ['10/13/2025', 187.8], ['11/10/2025', 184.8], ['11/24/2025', 183.8],
+            ['12/1/2025',  184.0], ['12/8/2025',  182.0], ['12/15/2025', 181.8],
+            ['12/29/2025', 181.8], ['1/12/2026',  181.6], ['1/26/2026',  182.7],
+            ['2/16/2026',  182.6], ['3/9/2026',   182.3], ['4/13/2026',  183.9],
+            ['4/20/2026',  184.0]
+        ]
+    };
+
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    function svgEl(name, attrs) {
+        var n = document.createElementNS(SVG_NS, name);
+        for (var k in attrs) n.setAttribute(k, attrs[k]);
+        return n;
+    }
+
+    function drawPresentationChart(svgId, series) {
+        var svg = document.getElementById(svgId);
+        var W = svg.clientWidth;
+        var H = svg.clientHeight;
+        if (!W || !H) return;  // slide still hidden — caller will retry
+
+        // Generous padding tuned for full-screen presentation viewing.
+        // pad.right has to fit both the end-of-line value labels (e.g.
+        // "254.8 lb") and the right-axis tick labels (e.g. "35%") side by
+        // side without colliding.
+        var pad = { top: 36, right: 170, bottom: 50, left: 80 };
+        var iw = W - pad.left - pad.right;
+        var ih = H - pad.top - pad.bottom;
+
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        var allTimes = [];
+        var lbSeries = [], pctSeries = [];
+        series.forEach(function (s) {
+            var pts = s.data.map(function (d) {
+                return { t: new Date(d[0]).getTime(), v: d[1] };
+            });
+            pts.forEach(function (p) { allTimes.push(p.t); });
+            var entry = {
+                name: s.name, color: s.color, suffix: s.suffix,
+                pts: pts, last: pts[pts.length - 1]
+            };
+            (s.axis === 'right' ? pctSeries : lbSeries).push(entry);
+        });
+
+        var tMin = Math.min.apply(null, allTimes);
+        var tMax = Math.max.apply(null, allTimes);
+
+        var lbVals = [];
+        lbSeries.forEach(function (s) { s.pts.forEach(function (p) { lbVals.push(p.v); }); });
+        var rawLbMin = Math.min.apply(null, lbVals);
+        var rawLbMax = Math.max.apply(null, lbVals);
+        var lbStep = (rawLbMax - rawLbMin) > 120 ? 50 : 25;
+        var lbMin = Math.floor(rawLbMin / lbStep) * lbStep;
+        var lbMax = Math.ceil(rawLbMax / lbStep) * lbStep;
+        var lbTicks = (lbMax - lbMin) / lbStep;
+
+        var pctVals = [];
+        pctSeries.forEach(function (s) { s.pts.forEach(function (p) { pctVals.push(p.v); }); });
+        var pctMin = pctVals.length ? Math.floor(Math.min.apply(null, pctVals) / 5) * 5 : 0;
+        var pctMax = pctVals.length ? Math.ceil(Math.max.apply(null, pctVals) / 5) * 5 : 100;
+
+        function x(t) { return pad.left + ((t - tMin) / (tMax - tMin)) * iw; }
+        function yL(v) { return pad.top + (1 - (v - lbMin) / (lbMax - lbMin)) * ih; }
+        function yR(v) { return pad.top + (1 - (v - pctMin) / (pctMax - pctMin)) * ih; }
+
+        for (var i = 0; i <= lbTicks; i++) {
+            var f = i / lbTicks;
+            var gy = pad.top + (1 - f) * ih;
+            svg.appendChild(svgEl('line', {
+                x1: pad.left, x2: W - pad.right, y1: gy, y2: gy,
+                stroke: 'rgba(255,255,255,0.10)', 'stroke-width': '1'
+            }));
+            svg.appendChild(svgEl('text', {
+                x: pad.left - 10, y: gy + 6,
+                fill: 'rgba(255,255,255,0.55)',
+                'font-size': '18', 'text-anchor': 'end'
+            })).textContent = Math.round(lbMin + (lbMax - lbMin) * f);
+            if (pctSeries.length) {
+                svg.appendChild(svgEl('text', {
+                    x: W - 8, y: gy + 6,
+                    fill: 'rgba(255,255,255,0.50)',
+                    'font-size': '18', 'text-anchor': 'end'
+                })).textContent = Math.round(pctMin + (pctMax - pctMin) * f) + '%';
+            }
+        }
+
+        svg.appendChild(svgEl('text', {
+            x: pad.left - 10, y: pad.top - 12,
+            fill: 'rgba(255,255,255,0.65)',
+            'font-size': '16', 'font-weight': '600', 'text-anchor': 'end'
+        })).textContent = 'lb';
+        if (pctSeries.length) {
+            svg.appendChild(svgEl('text', {
+                x: W - 8, y: pad.top - 12,
+                fill: 'rgba(255,255,255,0.65)',
+                'font-size': '16', 'font-weight': '600', 'text-anchor': 'end'
+            })).textContent = 'BF%';
+        }
+
+        var d0 = new Date(tMin), d1 = new Date(tMax);
+        function fmtDate(d) { return (d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2); }
+        svg.appendChild(svgEl('text', {
+            x: pad.left, y: H - 14,
+            fill: 'rgba(255,255,255,0.5)',
+            'font-size': '18', 'text-anchor': 'start'
+        })).textContent = fmtDate(d0);
+        svg.appendChild(svgEl('text', {
+            x: W - pad.right, y: H - 14,
+            fill: 'rgba(255,255,255,0.5)',
+            'font-size': '18', 'text-anchor': 'end'
+        })).textContent = fmtDate(d1);
+
+        var endLabels = [];
+        function drawSeries(s, yFn) {
+            var lineD = s.pts.map(function (p, i) {
+                return (i === 0 ? 'M ' : 'L ') + x(p.t) + ' ' + yFn(p.v);
+            }).join(' ');
+            svg.appendChild(svgEl('path', {
+                d: lineD, fill: 'none', stroke: s.color,
+                'stroke-width': '4',
+                'stroke-linecap': 'round', 'stroke-linejoin': 'round'
+            }));
+            s.pts.forEach(function (p) {
+                svg.appendChild(svgEl('circle', {
+                    cx: x(p.t), cy: yFn(p.v), r: 3,
+                    fill: s.color, opacity: '0.9'
+                }));
+            });
+            svg.appendChild(svgEl('circle', {
+                cx: x(s.last.t), cy: yFn(s.last.v), r: 8,
+                fill: s.color, stroke: '#1a252f', 'stroke-width': '3'
+            }));
+            var displayVal = (s.last.v === Math.floor(s.last.v)) ? s.last.v : s.last.v.toFixed(1);
+            endLabels.push({
+                x: x(s.last.t) + 12,
+                y: yFn(s.last.v) + 7,
+                color: s.color,
+                text: displayVal + s.suffix
+            });
+        }
+
+        lbSeries.forEach(function (s) { drawSeries(s, yL); });
+        pctSeries.forEach(function (s) { drawSeries(s, yR); });
+
+        // Stack overlapping end labels and clamp inside the plot area
+        endLabels.sort(function (a, b) { return a.y - b.y; });
+        var minGap = 26;
+        for (var k = 1; k < endLabels.length; k++) {
+            if (endLabels[k].y - endLabels[k - 1].y < minGap) {
+                endLabels[k].y = endLabels[k - 1].y + minGap;
+            }
+        }
+        var bottomLimit = pad.top + ih + 6;
+        var overflow = endLabels.length ? endLabels[endLabels.length - 1].y - bottomLimit : 0;
+        if (overflow > 0) endLabels.forEach(function (lbl) { lbl.y -= overflow; });
+
+        endLabels.forEach(function (lbl) {
+            svg.appendChild(svgEl('text', {
+                x: lbl.x, y: lbl.y,
+                fill: lbl.color, 'font-size': '20', 'font-weight': '700',
+                'text-anchor': 'start'
+            })).textContent = lbl.text;
+        });
+    }
+
+    function renderCharts() {
+        var active = slides[idx];
+        if (!active) return;
+        var svg = active.querySelector('svg');
+        if (!svg) return;
+        var data = svg.id === 'cearraChart' ? CEARRA :
+                   svg.id === 'kolbyChart'  ? KOLBY  : null;
+        if (!data) return;
+        drawPresentationChart(svg.id, [
+            { name: 'Weight',   color: '#f39c12', suffix: ' lb', axis: 'left',  data: data.weight },
+            { name: 'Lean',     color: '#2ecc71', suffix: ' lb', axis: 'left',  data: data.lean },
+            { name: 'Body Fat', color: '#e74c3c', suffix: '%',   axis: 'right', data: data.bf }
+        ]);
+    }
+
+    // Re-render the active chart when the slide changes (clientWidth is 0
+    // until the slide's display:flex kicks in) and on window resize.
+    var origRender = render;
+    render = function () {
+        origRender();
+        // Wait one tick for the active slide's flex layout to settle.
+        requestAnimationFrame(renderCharts);
+    };
+
+    window.addEventListener('resize', renderCharts);
 
     render();
 </script>
