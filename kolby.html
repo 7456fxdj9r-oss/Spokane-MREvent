@@ -146,6 +146,35 @@
             font-size: 11px;
             color: #95a5a6;
         }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            padding: 10px 6px 6px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #ecf0f1;
+            font-weight: 600;
+        }
+        .legend-item .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        p.chart-note {
+            font-size: 12px;
+            color: #95a5a6;
+            font-style: italic;
+            margin: 6px 6px 0;
+            line-height: 1.4;
+            text-align: center;
+        }
 
         .takeaway {
             background: rgba(243, 156, 18, 0.10);
@@ -187,7 +216,7 @@
     <div class="top">
         <div class="eyebrow">Real Person · Real Numbers</div>
         <h1>Kolby's Story</h1>
-        <p class="lede">8 months. 95 pounds. Body fat almost halved.</p>
+        <p class="lede">95 pounds gone — and almost 98% of his lean mass kept.</p>
     </div>
 
     <div class="photos">
@@ -207,53 +236,31 @@
             <span class="label">Total<br>weight loss</span>
         </div>
         <div class="h-stat">
+            <span class="num">~98%</span>
+            <span class="label">Lean Mass<br>retained</span>
+        </div>
+        <div class="h-stat">
             <span class="num">−16.8</span>
             <span class="label">Body Fat<br>% points</span>
         </div>
-        <div class="h-stat">
-            <span class="num">8 mo</span>
-            <span class="label">Time<br>elapsed</span>
-        </div>
     </div>
 
     <div class="chart-card">
         <div class="chart-head">
-            <h3>Weight</h3>
-            <span class="delta neg">350 → 254.8 lb</span>
+            <h3>The Right Kind of Weight Loss</h3>
+            <span class="delta neg">8 months</span>
         </div>
-        <svg class="chart" id="weightChart" preserveAspectRatio="none"></svg>
-        <div class="chart-foot">
-            <span>8/2025</span>
-            <span>4/2026</span>
+        <svg class="chart" id="comboChart" preserveAspectRatio="none" style="height:300px;"></svg>
+        <div class="legend">
+            <span class="legend-item"><span class="dot" style="background:#f39c12"></span>Weight</span>
+            <span class="legend-item"><span class="dot" style="background:#e74c3c"></span>Body Fat</span>
+            <span class="legend-item"><span class="dot" style="background:#2ecc71"></span>Lean Mass</span>
         </div>
-    </div>
-
-    <div class="chart-card">
-        <div class="chart-head">
-            <h3>Body Fat</h3>
-            <span class="delta neg">44.6% → 27.8%</span>
-        </div>
-        <svg class="chart" id="bfChart" preserveAspectRatio="none"></svg>
-        <div class="chart-foot">
-            <span>8/2025</span>
-            <span>4/2026</span>
-        </div>
-    </div>
-
-    <div class="chart-card">
-        <div class="chart-head">
-            <h3>Muscle Mass</h3>
-            <span class="delta flat">182 → 174.6 lb</span>
-        </div>
-        <svg class="chart" id="mmChart" preserveAspectRatio="none"></svg>
-        <div class="chart-foot">
-            <span>8/2025</span>
-            <span>4/2026</span>
-        </div>
+        <p class="chart-note">Each line shown as % of its starting value. Watch the green line stay near 100% — that's lean mass holding while everything else drops.</p>
     </div>
 
     <p class="takeaway">
-        <strong>95 pounds down. Body fat almost halved.</strong> A small amount of muscle came off too — what you'd expect from a body shedding this much weight — and the latest readings show muscle climbing again. Skeletal muscle measurements have moved from <strong>117.8 lb to 119 lb</strong> in the last six weeks. The recomposition is just getting started.
+        <strong>95 pounds gone — and almost 98% of his lean mass stayed.</strong> Most weight-loss journeys cost people muscle right alongside fat, leaving them smaller but metabolically older. Kolby did the opposite. The weight he lost was almost entirely fat. He didn't shrink — he <strong>recomposed</strong>. Same body, healthier biomarkers, metabolically younger.
     </p>
 
     <div class="footer-cta">
@@ -319,25 +326,23 @@
         ['4/20/2026', 27.8]
     ];
 
-    var mmData = [
-        ['8/25/2025', 182],
-        ['9/8/2025', 182.6],
-        ['9/22/2025', 181],
-        ['10/6/2025', 179.4],
-        ['10/13/2025', 178.8],
-        ['10/20/2025', 178.2],
-        ['10/27/2025', 177.2],
-        ['11/10/2025', 175.8],
-        ['11/24/2025', 174.8],
-        ['12/1/2025', 174],
-        ['12/8/2025', 173],
-        ['12/15/2025', 173],
-        ['12/29/2025', 172.8],
-        ['1/12/2026', 172.6],
-        ['1/26/2026', 174.2],
-        ['2/16/2026', 173.6],
-        ['3/9/2026', 173.2],
-        ['4/13/2026', 174.6]
+    // Lean mass: FFBW (Fat-Free Body Weight) from the body comp scan
+    // through 1/26/2026; later dates calculated as weight × (1 − BF%)
+    // since the FFBW column wasn't recorded in March/April.
+    var leanData = [
+        ['10/13/2025', 187.8],
+        ['11/10/2025', 184.8],
+        ['11/24/2025', 183.8],
+        ['12/1/2025',  184.0],
+        ['12/8/2025',  182.0],
+        ['12/15/2025', 181.8],
+        ['12/29/2025', 181.8],
+        ['1/12/2026',  181.6],
+        ['1/26/2026',  182.7],
+        ['2/16/2026',  182.6],
+        ['3/9/2026',   182.3],
+        ['4/13/2026',  183.9],
+        ['4/20/2026',  184.0]
     ];
 
     // ----- Chart rendering (same engine as cearra.html) -----
@@ -451,10 +456,117 @@
         svg.appendChild(endLabel);
     }
 
+    // Combined multi-line chart: each series normalized to % of its first value
+    function drawMultiChart(svgId, series) {
+        var svg = document.getElementById(svgId);
+        var W = svg.clientWidth || 320;
+        var H = 300;
+        var pad = { top: 24, right: 60, bottom: 28, left: 44 };
+        var iw = W - pad.left - pad.right;
+        var ih = H - pad.top - pad.bottom;
+
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        var allTimes = [];
+        var processed = series.map(function (s) {
+            var pts = s.data.map(function (d) {
+                return { t: new Date(d[0]).getTime(), raw: d[1] };
+            });
+            var base = pts[0].raw;
+            pts.forEach(function (p) { p.pct = (p.raw / base) * 100; allTimes.push(p.t); });
+            return { name: s.name, color: s.color, suffix: s.suffix, pts: pts, base: base, last: pts[pts.length - 1] };
+        });
+
+        var tMin = Math.min.apply(null, allTimes);
+        var tMax = Math.max.apply(null, allTimes);
+        var pcts = [];
+        processed.forEach(function (s) { s.pts.forEach(function (p) { pcts.push(p.pct); }); });
+        var yMin = Math.min(60, Math.floor(Math.min.apply(null, pcts) - 4));
+        var yMax = Math.max(105, Math.ceil(Math.max.apply(null, pcts) + 4));
+
+        function x(t) { return pad.left + ((t - tMin) / (tMax - tMin)) * iw; }
+        function y(v) { return pad.top + (1 - (v - yMin) / (yMax - yMin)) * ih; }
+
+        for (var i = 0; i <= 4; i++) {
+            var gv = yMin + (yMax - yMin) * (i / 4);
+            var gy = y(gv);
+            svg.appendChild(el('line', {
+                x1: pad.left, x2: W - pad.right,
+                y1: gy, y2: gy,
+                stroke: 'rgba(255,255,255,0.08)',
+                'stroke-width': '1'
+            }));
+            svg.appendChild(el('text', {
+                x: pad.left - 6, y: gy + 3,
+                fill: 'rgba(255,255,255,0.4)',
+                'font-size': '10', 'text-anchor': 'end'
+            })).textContent = Math.round(gv) + '%';
+        }
+
+        var bly = y(100);
+        svg.appendChild(el('line', {
+            x1: pad.left, x2: W - pad.right,
+            y1: bly, y2: bly,
+            stroke: 'rgba(255,255,255,0.25)',
+            'stroke-width': '1', 'stroke-dasharray': '3 3'
+        }));
+
+        var d0 = new Date(tMin), d1 = new Date(tMax);
+        function fmtDate(d) { return (d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2); }
+        svg.appendChild(el('text', {
+            x: pad.left, y: H - 8,
+            fill: 'rgba(255,255,255,0.4)',
+            'font-size': '11', 'text-anchor': 'start'
+        })).textContent = fmtDate(d0);
+        svg.appendChild(el('text', {
+            x: W - pad.right, y: H - 8,
+            fill: 'rgba(255,255,255,0.4)',
+            'font-size': '11', 'text-anchor': 'end'
+        })).textContent = fmtDate(d1);
+
+        processed.forEach(function (s) {
+            var lineD = s.pts.map(function (p, i) {
+                return (i === 0 ? 'M ' : 'L ') + x(p.t) + ' ' + y(p.pct);
+            }).join(' ');
+
+            svg.appendChild(el('path', {
+                d: lineD, fill: 'none', stroke: s.color,
+                'stroke-width': '2.8',
+                'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+                opacity: '0.95'
+            }));
+
+            s.pts.forEach(function (p) {
+                svg.appendChild(el('circle', {
+                    cx: x(p.t), cy: y(p.pct), r: 2,
+                    fill: s.color, opacity: '0.85'
+                }));
+            });
+
+            var last = s.last;
+            svg.appendChild(el('circle', {
+                cx: x(last.t), cy: y(last.pct), r: 5,
+                fill: s.color, stroke: '#1a252f', 'stroke-width': '2'
+            }));
+
+            var label = el('text', {
+                x: x(last.t) + 6, y: y(last.pct) + 4,
+                fill: s.color, 'font-size': '12', 'font-weight': '700',
+                'text-anchor': 'start'
+            });
+            var displayVal = (last.raw === Math.floor(last.raw)) ? last.raw : last.raw.toFixed(1);
+            label.textContent = displayVal + s.suffix;
+            svg.appendChild(label);
+        });
+    }
+
     function render() {
-        drawChart('weightChart', weightData, { padY: 8, fmt: function (v) { return Math.round(v) + ' lb'; } });
-        drawChart('bfChart', bfData, { padY: 1.5, fmt: function (v) { return v.toFixed(1) + '%'; } });
-        drawChart('mmChart', mmData, { padY: 1, fmt: function (v) { return v.toFixed(1) + ' lb'; } });
+        drawMultiChart('comboChart', [
+            { name: 'Weight',   color: '#f39c12', suffix: ' lb', data: weightData },
+            { name: 'Body Fat', color: '#e74c3c', suffix: '%',   data: bfData },
+            { name: 'Lean',    color: '#2ecc71', suffix: ' lb', data: leanData }
+        ]);
     }
 
     render();
