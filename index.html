@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metabolic Momentum</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="favicon-32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#d35400">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Momentum">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -80,6 +87,35 @@
             font-size: 12px;
             color: #999;
         }
+        .save-tip {
+            margin-top: 18px;
+            padding: 14px;
+            background: #fef3e2;
+            border: 1px solid #f5d6a8;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #6b3a06;
+            text-align: left;
+            line-height: 1.5;
+            display: none;
+        }
+        .save-tip strong { display: block; margin-bottom: 4px; color: #a8430a; font-size: 14px; }
+        .save-tip .close {
+            float: right;
+            font-size: 18px;
+            color: #a8430a;
+            cursor: pointer;
+            line-height: 1;
+            margin-left: 8px;
+            user-select: none;
+        }
+        .save-tip code {
+            background: #fff;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        @media (display-mode: standalone) { .save-tip { display: none !important; } }
     </style>
 </head>
 <body>
@@ -101,10 +137,41 @@
 
         <a href="#community" class="link-btn">🤝 Join the Community &amp; Newsletter</a>
 
+        <div class="save-tip" id="saveTip">
+            <span class="close" onclick="document.getElementById('saveTip').style.display='none'">×</span>
+            <strong>📱 Save this to your phone</strong>
+            <span id="saveTipBody"></span>
+        </div>
+
         <div class="footer-note">
             <p>You don't have to do this alone anymore.</p>
         </div>
     </div>
+
+    <script>
+        // Show platform-appropriate "Add to Home Screen" instructions.
+        // Hidden automatically when launched from the home screen (display-mode: standalone).
+        (function () {
+            const ua = navigator.userAgent;
+            const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+            const isAndroid = /Android/.test(ua);
+            const tip = document.getElementById('saveTip');
+            const body = document.getElementById('saveTipBody');
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+                return; // already installed
+            }
+            if (isIOS) {
+                body.innerHTML = 'Tap the <strong>Share</strong> button <code>⬆︎</code> at the bottom of Safari, then choose <strong>Add to Home Screen</strong>.';
+                tip.style.display = 'block';
+            } else if (isAndroid) {
+                body.innerHTML = 'Tap the <strong>⋮</strong> menu in Chrome, then choose <strong>Add to Home screen</strong> (or <strong>Install app</strong>).';
+                tip.style.display = 'block';
+            } else {
+                body.innerHTML = 'On your phone: open this page in your browser, then use the share menu and choose <strong>Add to Home Screen</strong>.';
+                tip.style.display = 'block';
+            }
+        })();
+    </script>
 
 </body>
 </html>
