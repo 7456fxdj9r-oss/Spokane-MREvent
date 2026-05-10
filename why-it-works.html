@@ -204,6 +204,33 @@
             line-height: 1.4;
         }
 
+        /* Journey phase list (Reset / Refine / Renew) */
+        .phase-list {
+            list-style: none;
+            counter-reset: none;
+            padding: 0;
+            margin: 14px 0 4px;
+        }
+        .phase-list li {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            margin: 12px 0;
+        }
+        .phase-list .phase-num {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #d35400;
+            color: #fff;
+            font-weight: 800;
+            border-radius: 50%;
+            font-size: 14px;
+        }
+        .phase-list strong { color: #f39c12; }
+
         /* CTAs */
         .footer-cta {
             display: grid;
@@ -314,6 +341,17 @@
         <p>If only 1 in 8 American adults is metabolically healthy, then your raised hand a few minutes ago — that wasn't a quirk of this room. That's the country.</p>
         <p>The body that got you into this can get you out. <strong>5 to 10% weight loss is enough</strong> to move every marker in the right direction. The data says it works. The room can show you it works. The piece nobody wants to hear and everybody needs to hear: <strong>support and accountability matter as much as the protocol</strong>.</p>
         <p>That's why this room exists.</p>
+    </section>
+
+    <section class="block">
+        <h2>The Journey — In Three Phases</h2>
+        <p>The framework that organizes <em>how</em> the change actually happens is called <strong>Metabolic Synchronization™</strong>. Three phases, in order:</p>
+        <ol class="phase-list">
+            <li><span class="phase-num">1</span><div><strong>Reset</strong> — Heal and rebalance your metabolism. The Targeted Reset™ phase: structured nutrition, targeted fat loss, lean mass preserved.</div></li>
+            <li><span class="phase-num">2</span><div><strong>Refine</strong> — Strengthen and optimize. Fine-tune habits, build muscle, learn the long-term lifestyle.</div></li>
+            <li><span class="phase-num">3</span><div><strong>Renew</strong> — Live fully energized and transformed. Lifelong health, sustainable habits, leading well at home and in your community.</div></li>
+        </ol>
+        <p style="text-align:center;margin-top:18px;"><a href="index.html" style="color:#f39c12;font-weight:bold;">→ Tap each phase on the hub</a> to see what that phase actually looks like.</p>
     </section>
 
     <div class="footer-cta">
