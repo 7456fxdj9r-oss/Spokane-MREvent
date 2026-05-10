@@ -525,6 +525,7 @@
     <button id="fsBtn">Fullscreen</button>
 </div>
 
+<script src="chart.js"></script>
 <script>
     var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
     var counter = document.getElementById('counter');
@@ -662,165 +663,7 @@
         ]
     };
 
-    var SVG_NS = 'http://www.w3.org/2000/svg';
-    function svgEl(name, attrs) {
-        var n = document.createElementNS(SVG_NS, name);
-        for (var k in attrs) n.setAttribute(k, attrs[k]);
-        return n;
-    }
-
-    function drawPresentationChart(svgId, series) {
-        var svg = document.getElementById(svgId);
-        var W = svg.clientWidth;
-        var H = svg.clientHeight;
-        if (!W || !H) return;  // slide still hidden — caller will retry
-
-        // Generous padding tuned for full-screen presentation viewing.
-        // pad.right has to fit both the end-of-line value labels (e.g.
-        // "254.8 lb") and the right-axis tick labels (e.g. "35%") side by
-        // side without colliding.
-        var pad = { top: 36, right: 170, bottom: 50, left: 80 };
-        var iw = W - pad.left - pad.right;
-        var ih = H - pad.top - pad.bottom;
-
-        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-        while (svg.firstChild) svg.removeChild(svg.firstChild);
-
-        var allTimes = [];
-        var lbSeries = [], pctSeries = [];
-        series.forEach(function (s) {
-            var pts = s.data.map(function (d) {
-                return { t: new Date(d[0]).getTime(), v: d[1] };
-            });
-            pts.forEach(function (p) { allTimes.push(p.t); });
-            var entry = {
-                name: s.name, color: s.color, suffix: s.suffix,
-                pts: pts, last: pts[pts.length - 1]
-            };
-            (s.axis === 'right' ? pctSeries : lbSeries).push(entry);
-        });
-
-        var tMin = Math.min.apply(null, allTimes);
-        var tMax = Math.max.apply(null, allTimes);
-
-        var lbVals = [];
-        lbSeries.forEach(function (s) { s.pts.forEach(function (p) { lbVals.push(p.v); }); });
-        var rawLbMin = Math.min.apply(null, lbVals);
-        var rawLbMax = Math.max.apply(null, lbVals);
-        var lbStep = (rawLbMax - rawLbMin) > 120 ? 50 : 25;
-        var lbMin = Math.floor(rawLbMin / lbStep) * lbStep;
-        var lbMax = Math.ceil(rawLbMax / lbStep) * lbStep;
-        var lbTicks = (lbMax - lbMin) / lbStep;
-
-        var pctVals = [];
-        pctSeries.forEach(function (s) { s.pts.forEach(function (p) { pctVals.push(p.v); }); });
-        var pctMin = pctVals.length ? Math.floor(Math.min.apply(null, pctVals) / 5) * 5 : 0;
-        var pctMax = pctVals.length ? Math.ceil(Math.max.apply(null, pctVals) / 5) * 5 : 100;
-
-        function x(t) { return pad.left + ((t - tMin) / (tMax - tMin)) * iw; }
-        function yL(v) { return pad.top + (1 - (v - lbMin) / (lbMax - lbMin)) * ih; }
-        function yR(v) { return pad.top + (1 - (v - pctMin) / (pctMax - pctMin)) * ih; }
-
-        for (var i = 0; i <= lbTicks; i++) {
-            var f = i / lbTicks;
-            var gy = pad.top + (1 - f) * ih;
-            svg.appendChild(svgEl('line', {
-                x1: pad.left, x2: W - pad.right, y1: gy, y2: gy,
-                stroke: 'rgba(255,255,255,0.10)', 'stroke-width': '1'
-            }));
-            svg.appendChild(svgEl('text', {
-                x: pad.left - 10, y: gy + 6,
-                fill: 'rgba(255,255,255,0.55)',
-                'font-size': '18', 'text-anchor': 'end'
-            })).textContent = Math.round(lbMin + (lbMax - lbMin) * f);
-            if (pctSeries.length) {
-                svg.appendChild(svgEl('text', {
-                    x: W - 8, y: gy + 6,
-                    fill: 'rgba(255,255,255,0.50)',
-                    'font-size': '18', 'text-anchor': 'end'
-                })).textContent = Math.round(pctMin + (pctMax - pctMin) * f) + '%';
-            }
-        }
-
-        svg.appendChild(svgEl('text', {
-            x: pad.left - 10, y: pad.top - 12,
-            fill: 'rgba(255,255,255,0.65)',
-            'font-size': '16', 'font-weight': '600', 'text-anchor': 'end'
-        })).textContent = 'lb';
-        if (pctSeries.length) {
-            svg.appendChild(svgEl('text', {
-                x: W - 8, y: pad.top - 12,
-                fill: 'rgba(255,255,255,0.65)',
-                'font-size': '16', 'font-weight': '600', 'text-anchor': 'end'
-            })).textContent = 'BF%';
-        }
-
-        var d0 = new Date(tMin), d1 = new Date(tMax);
-        function fmtDate(d) { return (d.getMonth() + 1) + '/' + String(d.getFullYear()).slice(2); }
-        svg.appendChild(svgEl('text', {
-            x: pad.left, y: H - 14,
-            fill: 'rgba(255,255,255,0.5)',
-            'font-size': '18', 'text-anchor': 'start'
-        })).textContent = fmtDate(d0);
-        svg.appendChild(svgEl('text', {
-            x: W - pad.right, y: H - 14,
-            fill: 'rgba(255,255,255,0.5)',
-            'font-size': '18', 'text-anchor': 'end'
-        })).textContent = fmtDate(d1);
-
-        var endLabels = [];
-        function drawSeries(s, yFn) {
-            var lineD = s.pts.map(function (p, i) {
-                return (i === 0 ? 'M ' : 'L ') + x(p.t) + ' ' + yFn(p.v);
-            }).join(' ');
-            svg.appendChild(svgEl('path', {
-                d: lineD, fill: 'none', stroke: s.color,
-                'stroke-width': '4',
-                'stroke-linecap': 'round', 'stroke-linejoin': 'round'
-            }));
-            s.pts.forEach(function (p) {
-                svg.appendChild(svgEl('circle', {
-                    cx: x(p.t), cy: yFn(p.v), r: 3,
-                    fill: s.color, opacity: '0.9'
-                }));
-            });
-            svg.appendChild(svgEl('circle', {
-                cx: x(s.last.t), cy: yFn(s.last.v), r: 8,
-                fill: s.color, stroke: '#1a252f', 'stroke-width': '3'
-            }));
-            var displayVal = (s.last.v === Math.floor(s.last.v)) ? s.last.v : s.last.v.toFixed(1);
-            endLabels.push({
-                x: x(s.last.t) + 12,
-                y: yFn(s.last.v) + 7,
-                color: s.color,
-                text: displayVal + s.suffix
-            });
-        }
-
-        lbSeries.forEach(function (s) { drawSeries(s, yL); });
-        pctSeries.forEach(function (s) { drawSeries(s, yR); });
-
-        // Stack overlapping end labels and clamp inside the plot area
-        endLabels.sort(function (a, b) { return a.y - b.y; });
-        var minGap = 26;
-        for (var k = 1; k < endLabels.length; k++) {
-            if (endLabels[k].y - endLabels[k - 1].y < minGap) {
-                endLabels[k].y = endLabels[k - 1].y + minGap;
-            }
-        }
-        var bottomLimit = pad.top + ih + 6;
-        var overflow = endLabels.length ? endLabels[endLabels.length - 1].y - bottomLimit : 0;
-        if (overflow > 0) endLabels.forEach(function (lbl) { lbl.y -= overflow; });
-
-        endLabels.forEach(function (lbl) {
-            svg.appendChild(svgEl('text', {
-                x: lbl.x, y: lbl.y,
-                fill: lbl.color, 'font-size': '20', 'font-weight': '700',
-                'text-anchor': 'start'
-            })).textContent = lbl.text;
-        });
-    }
-
+    // Chart engine lives in chart.js (loaded via <script src> above).
     function renderCharts() {
         var active = slides[idx];
         if (!active) return;
@@ -829,11 +672,11 @@
         var data = svg.id === 'cearraChart' ? CEARRA :
                    svg.id === 'kolbyChart'  ? KOLBY  : null;
         if (!data) return;
-        drawPresentationChart(svg.id, [
+        MetabolicChart.draw(svg.id, [
             { name: 'Weight',   color: '#f39c12', suffix: ' lb', axis: 'left',  data: data.weight },
             { name: 'Lean',     color: '#2ecc71', suffix: ' lb', axis: 'left',  data: data.lean },
             { name: 'Body Fat', color: '#e74c3c', suffix: '%',   axis: 'right', data: data.bf }
-        ]);
+        ], { preset: 'presentation' });
     }
 
     // Re-render the active chart when the slide changes (clientWidth is 0
