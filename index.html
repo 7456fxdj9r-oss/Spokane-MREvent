@@ -116,6 +116,122 @@
             font-size: 12px;
         }
         @media (display-mode: standalone) { .save-tip { display: none !important; } }
+
+        /* The Journey: Reset / Refine / Renew — accordion buttons */
+        .journey-head {
+            margin: 22px 0 8px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .journey-head em {
+            color: #d35400;
+            font-style: normal;
+            font-weight: 800;
+        }
+        .journey-item {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .journey-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px 16px;
+            background: #2c3e50;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            text-align: left;
+            transition: background 0.25s ease;
+        }
+        .journey-btn:hover { background: #1a252f; }
+        .journey-btn .step-num {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: #d35400;
+            color: #fff;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .journey-btn .label {
+            flex: 1;
+            line-height: 1.25;
+        }
+        .journey-btn .phase {
+            display: block;
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+        .journey-btn .tagline {
+            display: block;
+            font-weight: 400;
+            font-size: 12px;
+            color: #bdc3c7;
+            font-style: italic;
+            margin-top: 2px;
+        }
+        .journey-btn .chevron {
+            flex-shrink: 0;
+            font-size: 14px;
+            color: #f39c12;
+            transition: transform 0.25s ease;
+        }
+        .journey-btn.open .chevron { transform: rotate(180deg); }
+
+        .journey-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.25s ease;
+            background: #fef3e2;
+            border: 1px solid #f5d6a8;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-top: -8px;
+            padding: 0 16px;
+            font-size: 13px;
+            color: #4a3015;
+            line-height: 1.5;
+        }
+        .journey-content.open {
+            max-height: 800px;
+            padding: 14px 16px 16px;
+        }
+        .journey-content .blurb {
+            font-style: italic;
+            color: #6b3a06;
+            margin-bottom: 12px;
+        }
+        .journey-content h4 {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a8430a;
+            margin: 12px 0 6px;
+            font-weight: 800;
+        }
+        .journey-content ul {
+            margin: 0 0 4px 18px;
+            padding: 0;
+        }
+        .journey-content li { margin-bottom: 3px; }
+        .journey-content .lang li {
+            font-style: italic;
+            color: #6b3a06;
+        }
+        .journey-content .connected {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -137,6 +253,101 @@
 
         <a href="why-it-works.html" class="link-btn">🧠 Why It Works (the science)</a>
 
+        <p class="journey-head">The Journey · <em>Metabolic Synchronization™</em></p>
+
+        <div class="journey-item">
+            <button class="journey-btn" type="button" aria-expanded="false">
+                <span class="step-num">1</span>
+                <span class="label">
+                    <span class="phase">RESET</span>
+                    <span class="tagline">Heal and rebalance your metabolism</span>
+                </span>
+                <span class="chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="journey-content">
+                <p class="blurb">The Targeted Reset™ phase — reversing metabolic dysfunction through structured nutrition and targeted fat loss.</p>
+                <h4>Focus</h4>
+                <ul>
+                    <li>Reducing visceral fat ("bad fat")</li>
+                    <li>Balancing blood sugar and hunger hormones</li>
+                    <li>Preserving lean muscle</li>
+                    <li>Improving energy, sleep, inflammation, cravings</li>
+                    <li>Creating structure and consistency</li>
+                </ul>
+                <h4>How it sounds</h4>
+                <ul class="lang">
+                    <li>"Strong and targeted fat burn"</li>
+                    <li>"Breaking the cycle"</li>
+                    <li>"Getting your body functioning properly again"</li>
+                    <li>"Moving from metabolic dysfunction into synchronization"</li>
+                </ul>
+                <h4>Connected to</h4>
+                <p class="connected">The 5 &amp; 1 Plan® · Fat loss · Body composition change · Visceral fat reduction · Lean mass preservation</p>
+            </div>
+        </div>
+
+        <div class="journey-item">
+            <button class="journey-btn" type="button" aria-expanded="false">
+                <span class="step-num">2</span>
+                <span class="label">
+                    <span class="phase">REFINE</span>
+                    <span class="tagline">Strengthen and optimize your health</span>
+                </span>
+                <span class="chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="journey-content">
+                <p class="blurb">The optimization phase — fine-tuning health, habits, body composition, and lifestyle after the initial reset.</p>
+                <h4>Focus</h4>
+                <ul>
+                    <li>Refining habits</li>
+                    <li>Strengthening metabolism</li>
+                    <li>Building muscle and improving body composition</li>
+                    <li>Learning flexibility without losing results</li>
+                    <li>Improving performance, confidence, sustainability</li>
+                </ul>
+                <h4>How it sounds</h4>
+                <ul class="lang">
+                    <li>"Dialing in your health"</li>
+                    <li>"Optimization"</li>
+                    <li>"Fine-tuning your metabolism"</li>
+                    <li>"Building a lifestyle, not just losing weight"</li>
+                </ul>
+                <h4>What people do here</h4>
+                <p class="connected">Add healthy whole foods strategically · Build movement and strength training · Learn long-term metabolic habits · Move into optimization plans and maintenance</p>
+            </div>
+        </div>
+
+        <div class="journey-item">
+            <button class="journey-btn" type="button" aria-expanded="false">
+                <span class="step-num">3</span>
+                <span class="label">
+                    <span class="phase">RENEW</span>
+                    <span class="tagline">Live fully energized and transformed</span>
+                </span>
+                <span class="chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="journey-content">
+                <p class="blurb">The longevity and lifestyle phase — living fully renewed physically, mentally, emotionally, and energetically.</p>
+                <h4>Focus</h4>
+                <ul>
+                    <li>Lifelong health</li>
+                    <li>Sustainable habits</li>
+                    <li>Purpose-driven living</li>
+                    <li>Showing up as your best self</li>
+                    <li>Leading your family and community well</li>
+                </ul>
+                <h4>How it sounds</h4>
+                <ul class="lang">
+                    <li>"A renewed life"</li>
+                    <li>"Thriving, not just surviving"</li>
+                    <li>"Energy, purpose, longevity"</li>
+                    <li>"Health freedom"</li>
+                </ul>
+                <h4>What this looks like</h4>
+                <p class="connected">Becoming an example for your family · Leading well in your home · Mentoring or coaching others · Vitality, aging well, and impact</p>
+            </div>
+        </div>
+
         <a href="https://28dayreset.com/quiz?ref=MEL7591" class="link-btn" target="_blank" rel="noopener">🧪 Take the Metabolic Quiz</a>
 
         <div class="save-tip" id="saveTip">
@@ -149,6 +360,20 @@
             <p>You don't have to do this alone anymore.</p>
         </div>
     </div>
+
+    <script>
+        // The Journey accordion: tap a phase button to expand its detail panel.
+        document.querySelectorAll('.journey-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var content = btn.nextElementSibling;
+                var isOpen = btn.classList.toggle('open');
+                btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                if (content && content.classList.contains('journey-content')) {
+                    content.classList.toggle('open', isOpen);
+                }
+            });
+        });
+    </script>
 
     <script>
         // Show platform-appropriate "Add to Home Screen" instructions.
